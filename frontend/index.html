@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrantBridge AI — Caribbean Business Plan Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* ── Design Tokens ────────────────────────────────────────────────────────── */
+:root{
+  /* backgrounds */
+  --bg:       #0f0f12;
+  --bg2:      #17171c;
+  --bg3:      #1e1e25;
+  --bg4:      #25252f;
+  /* borders */
+  --bd:       #252530;
+  --bd2:      #32323f;
+  --bd3:      #3e3e4e;
+  /* text */
+  --tx:       #e2e2ec;
+  --tx2:      #8a8aa8;
+  --tx3:      #4e4e68;
+  /* brand */
+  --teal:     #00b87c;
+  --teal-h:   #00d48e;
+  --teal-d:   #0b3d2e;
+  --teal-t:   #00c986;
+  --gold:     #c8850a;
+  --gold-d:   #3a2100;
+  --gold-t:   #eda830;
+  /* semantic */
+  --err:      #e05555;
+  --err-d:    #3a1010;
+  /* spacing */
+  --r:        6px;
+  --rl:       10px;
+  --rxl:      14px;
+  /* type */
+  --ff-display: 'Open Sans', sans-serif;
+  --ff-body:    'Open Sans', sans-serif;
+}
+html.light{
+  --bg:#f5f5f8; --bg2:#ffffff; --bg3:#f0f0f4; --bg4:#e8e8ee;
+  --bd:#e0e0e8; --bd2:#d0d0da; --bd3:#c0c0cc;
+  --tx:#141420; --tx2:#5a5a7a; --tx3:#9898b0;
+  --teal-d:#dcf5ed; --teal-t:#0a6645;
+  --gold-d:#fef3e0; --gold-t:#8a5800;
+  --err-d:#fde8e8;
+}
+
+/* ── Base elements ────────────────────────────────────────────────────────── */
+body{
+  font-family:var(--ff-body);
+  background:var(--bg);
+  color:var(--tx);
+  line-height:1.6;
+  min-height:100vh;
+}
+input,select,textarea,button{font-family:var(--ff-body)}
+
+/* ── NAV ──────────────────────────────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:54px;
+  background:var(--bg);
+  border-bottom:1px solid var(--bd);
+  backdrop-filter:blur(12px);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-mark{
+  width:28px;height:28px;border-radius:6px;
+  background:var(--teal);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.nav-mark svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{
+  font-family:var(--ff-display);font-size:15px;font-weight:800;
+  letter-spacing:-.02em;color:var(--tx);
+}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{
+  padding:5px 11px;border-radius:var(--r);
+  font-size:13px;font-weight:500;color:var(--tx2);
+  cursor:pointer;
+  transition:color .15s,background .15s;
+  text-decoration:none;
+  border:none;background:none;
+}
+.nav-link:hover{color:var(--tx);background:var(--bg3)}
+.nav-link.active{color:var(--tx);background:var(--bg3)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-badge{
+  font-size:11px;font-weight:600;letter-spacing:.05em;
+  color:var(--teal-t);background:var(--teal-d);
+  padding:3px 9px;border-radius:20px;
+  border:1px solid rgba(0,184,124,.2);
+}
+html.light .nav-badge{border-color:rgba(0,150,100,.25)}
+.theme-btn{
+  width:32px;height:32px;border-radius:var(--r);
+  border:1px solid var(--bd2);background:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--tx2);
+  transition:border-color .15s,color .15s;
+}
+.theme-btn:hover{border-color:var(--bd3);color:var(--tx)}
+.theme-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
+
+/* ── Page layout ──────────────────────────────────────────────────────────── */
+.page{max-width:860px;margin:0 auto;padding:0 40px 100px}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+.hero{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  padding:72px 0 64px;
+  align-items:center;
+  border-bottom:1px solid var(--bd);
+  margin-bottom:48px;
+}
+.hero-left{
+  padding-right:56px;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal-t);margin-bottom:24px;
+}
+.hero-eyebrow::before{
+  content:'';display:block;
+  width:18px;height:2px;background:var(--teal);flex-shrink:0;
+}
+.hero-h1{
+  font-family:'Open Sans',sans-serif;
+  font-size:clamp(28px,3.6vw,44px);
+  font-weight:700;
+  line-height:1.13;
+  letter-spacing:-.02em;
+  color:var(--tx);
+  max-width:14ch;
+  margin-bottom:20px;
+}
+.hero-h1 em{color:var(--teal-t);font-style:normal}
+.hero-sub{
+  font-family:'Open Sans',sans-serif;
+  font-size:15px;font-weight:400;
+  color:var(--tx2);line-height:1.8;
+  max-width:52ch;
+  margin-bottom:36px;
+}
+.hero-ctas{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.btn-primary{
+  background:var(--teal);
+  color:#fff;
+  border:none;border-radius:5px;
+  padding:11px 22px;
+  font-family:'Open Sans',sans-serif;
+  font-size:13.5px;font-weight:600;
+  letter-spacing:.01em;
+  cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;
+  transition:background .15s,transform .1s;
+  text-decoration:none;
+}
+.btn-primary:hover{background:var(--teal-h)}
+.btn-primary:active{transform:scale(.99)}
+.btn-primary svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.btn-secondary{
+  background:none;
+  color:var(--tx2);
+  border:1px solid var(--bd2);border-radius:5px;
+  padding:10px 20px;
+  font-family:'Open Sans',sans-serif;
+  font-size:13.5px;font-weight:600;
+  letter-spacing:.01em;
+  cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;
+  transition:border-color .15s,color .15s;
+  text-decoration:none;
+}
+.btn-secondary:hover{border-color:var(--bd3);color:var(--tx)}
+.btn-secondary svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Hero right — visual grid */
+.hero-right{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:8px;
+  padding-left:8px;
+}
+.hblock{
+  border-radius:8px;
+  padding:20px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  min-height:120px;
+}
+.hblock-label{
+  font-family:'Open Sans',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:8px;
+}
+.hblock-num{
+  font-family:'Open Sans',sans-serif;
+  font-size:28px;font-weight:700;
+  letter-spacing:-.02em;line-height:1;
+}
+.hblock-desc{
+  font-family:'Open Sans',sans-serif;
+  font-size:11.5px;line-height:1.5;margin-top:6px;
+}
+/* block colours */
+.hblock-teal{
+  background:var(--teal-d);
+  border:1px solid rgba(0,184,124,.18);
+}
+.hblock-teal .hblock-label{color:var(--teal-t);opacity:.7}
+.hblock-teal .hblock-num{color:var(--teal-t)}
+.hblock-teal .hblock-desc{color:var(--teal-t);opacity:.55}
+.hblock-dim{
+  background:var(--bg3);
+  border:1px solid var(--bd);
+}
+.hblock-dim .hblock-label{color:var(--tx3)}
+.hblock-dim .hblock-num{color:var(--tx)}
+.hblock-dim .hblock-desc{color:var(--tx3)}
+.hblock-dark{
+  background:var(--bg2);
+  border:1px solid var(--bd);
+  grid-column:1/-1;
+  min-height:80px;
+  flex-direction:row;align-items:center;justify-content:space-between;
+  gap:16px;
+}
+.hblock-dark .hblock-label{color:var(--tx3);margin-bottom:0}
+.hblock-dark .hblock-desc{color:var(--tx2);margin-top:0;font-size:12.5px}
+.hblock-pipe{
+  display:flex;align-items:center;gap:0;flex:1;max-width:240px;
+}
+.hpipe-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--bd2);flex-shrink:0;
+  transition:background .3s;
+}
+.hpipe-dot.lit{background:var(--teal)}
+.hpipe-line{flex:1;height:1px;background:var(--bd)}
+.hpipe-line.lit{background:var(--teal)}
+
+/* Light mode hero overrides */
+html.light .hblock-teal{background:#e8f8f2;border-color:rgba(0,150,100,.2)}
+html.light .hblock-teal .hblock-label{color:#0a6645;opacity:.8}
+html.light .hblock-teal .hblock-num{color:#0a6645}
+html.light .hblock-teal .hblock-desc{color:#0a6645;opacity:.6}
+html.light .hblock-dim{background:#f4f4f7;border-color:#e0e0e8}
+html.light .hblock-dark{background:#fff;border-color:#e0e0e8}
+
+/* Responsive hero */
+@media(max-width:760px){
+  .hero{grid-template-columns:1fr;padding:48px 0 40px;gap:40px}
+  .hero-left{padding-right:0}
+  .hero-h1{max-width:none;font-size:clamp(26px,7vw,36px)}
+  .hero-sub{max-width:none}
+  .hero-right{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .hero-right{grid-template-columns:1fr}
+  .hblock-dark{grid-column:1}
+}
+
+/* ── Form card ────────────────────────────────────────────────────────────── */
+.form-card{
+  background:var(--bg2);
+  border:1px solid var(--bd);
+  border-radius:var(--rxl);
+  padding:32px;
+}
+
+/* ── Plan type selector ───────────────────────────────────────────────────── */
+.section-label{
+  font-size:11px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--tx3);
+  margin-bottom:10px;
+}
+.plan-types{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:28px}
+.plan-type{
+  border:1px solid var(--bd);border-radius:var(--rl);
+  padding:14px 16px;cursor:pointer;
+  background:var(--bg3);
+  transition:border-color .15s,background .15s;
+}
+.plan-type:hover{border-color:var(--bd3);background:var(--bg4)}
+.plan-type.selected{border-color:var(--teal);background:#071a12}
+html.light .plan-type.selected{background:#e8f8f2}
+.pt-icon{
+  width:26px;height:26px;border-radius:5px;
+  background:var(--bg4);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:10px;
+  transition:background .15s;
+}
+.plan-type.selected .pt-icon{background:var(--teal-d)}
+html.light .plan-type.selected .pt-icon{background:#c0eed8}
+.pt-icon svg{width:13px;height:13px;stroke:var(--tx3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .15s}
+.plan-type.selected .pt-icon svg{stroke:var(--teal-t)}
+.pt-name{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:3px;transition:color .15s}
+.plan-type.selected .pt-name{color:var(--teal-t)}
+.pt-desc{font-size:11px;color:var(--tx3);line-height:1.5}
+
+/* ── Form sections ────────────────────────────────────────────────────────── */
+.form-section{margin-bottom:24px}
+.form-section-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.fsec-num{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--bd2);
+  font-size:11px;font-weight:600;color:var(--tx3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.fsec-title{font-size:13px;font-weight:600;color:var(--tx);letter-spacing:.01em}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg-full{grid-column:1/-1}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-lbl{
+  font-size:12px;font-weight:500;color:var(--tx2);
+  letter-spacing:.01em;
+}
+.form-lbl .req{color:var(--err);margin-left:2px}
+.form-inp{
+  background:var(--bg3);
+  border:1px solid var(--bd);border-radius:var(--r);
+  padding:9px 12px;
+  font-size:13.5px;color:var(--tx);
+  transition:border-color .15s,padding-left .1s;
+  width:100%;
+}
+.form-inp:hover{border-color:var(--bd2)}
+.form-inp:focus{
+  outline:none;
+  border-color:var(--teal);
+  border-left-width:2px;
+  padding-left:11px;
+  background:var(--bg2);
+}
+.form-inp::placeholder{color:var(--tx3)}
+select.form-inp{
+  appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234e4e68'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 11px center;
+  padding-right:28px;
+}
+html.light select.form-inp{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239898b0'/%3E%3C/svg%3E");
+}
+textarea.form-inp{resize:vertical;min-height:78px;line-height:1.6}
+
+/* ── Divider ──────────────────────────────────────────────────────────────── */
+.form-divider{height:1px;background:var(--bd);margin:4px 0 24px}
+
+/* ── Submit row ───────────────────────────────────────────────────────────── */
+.submit-row{display:flex;align-items:center;gap:10px;padding-top:4px}
+/* lang-wrap removed — language now in nav */
+.btn-gen{
+  flex:1;
+  background:var(--teal);border:none;border-radius:var(--r);
+  padding:10px 20px;
+  font-size:13.5px;font-weight:600;letter-spacing:.01em;color:#fff;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:background .15s,transform .1s,box-shadow .15s;
+}
+.btn-gen:hover{background:var(--teal-h)}
+.btn-gen:active{transform:scale(.99)}
+.btn-gen:disabled{opacity:.5;cursor:not-allowed}
+.btn-gen svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ── Loading card ─────────────────────────────────────────────────────────── */
+.loading-card{
+  display:none;
+  background:var(--bg2);border:1px solid var(--bd);
+  border-radius:var(--rxl);padding:36px 32px;
+  margin-top:20px;
+}
+.loading-card.visible{display:block}
+.loading-hd{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:24px;
+}
+.spinner{
+  width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--bd2);
+  border-top-color:var(--teal);
+  animation:spin .7s linear infinite;flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{font-size:15px;font-weight:600;color:var(--tx)}
+.loading-sub{font-size:13px;color:var(--tx2);margin-bottom:28px;max-width:480px;line-height:1.6}
+
+/* Pipeline stepper */
+.pipeline{display:flex;align-items:center;margin-bottom:10px}
+.pipe-step{display:flex;align-items:center;flex:1}
+.pipe-dot{
+  width:26px;height:26px;border-radius:50%;
+  border:1px solid var(--bd);background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;position:relative;z-index:1;
+  transition:all .3s;
+}
+.pipe-dot.done{background:var(--teal);border-color:var(--teal)}
+.pipe-dot.active{
+  border-color:var(--teal);background:var(--bg2);
+  box-shadow:0 0 0 3px var(--teal-d);
+}
+.pipe-dot.active::after{
+  content:'';position:absolute;
+  width:7px;height:7px;border-radius:50%;background:var(--teal);
+  animation:pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.pipe-dot svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.pipe-line{flex:1;height:1px;background:var(--bd);margin:0 -1px;transition:background .4s}
+.pipe-line.done{background:var(--teal)}
+.pipe-labels{display:flex;justify-content:space-between;padding:0 0}
+.pipe-lbl{
+  font-size:10px;font-weight:500;color:var(--tx3);
+  text-align:center;flex:1;
+  transition:color .3s;
+}
+.pipe-lbl.done{color:var(--tx2)}
+.pipe-lbl.active{color:var(--teal-t)}
+
+/* ── Review panel ─────────────────────────────────────────────────────────── */
+.review-panel{
+  display:none;
+  background:var(--bg2);
+  border:1px solid var(--gold);
+  border-radius:var(--rxl);
+  overflow:hidden;
+  margin-top:20px;
+  animation:slideUp .35s ease;
+}
+.review-panel.visible{display:block}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.review-hd{
+  padding:22px 28px 18px;
+  border-bottom:1px solid var(--bd);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+}
+.review-badge{
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold-t);background:var(--gold-d);
+  border:1px solid rgba(200,133,10,.3);
+  padding:3px 9px;border-radius:4px;flex-shrink:0;margin-top:3px;
+}
+html.light .review-badge{border-color:rgba(200,133,10,.4)}
+.review-title{
+  font-family:var(--ff-display);font-size:18px;font-weight:700;
+  color:var(--tx);letter-spacing:-.025em;margin-bottom:5px;
+}
+.review-subtitle{font-size:13px;color:var(--tx2);line-height:1.65;max-width:520px}
+.review-body{padding:20px 28px}
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.review-field{
+  width:100%;background:var(--bg);
+  border:1px solid var(--bd);border-radius:var(--r);
+  padding:9px 13px;
+  font-size:13px;color:var(--tx);font-family:var(--ff-body);
+  resize:vertical;min-height:80px;line-height:1.65;
+  transition:border-color .15s,padding-left .1s;
+}
+.review-field:hover{border-color:var(--bd2)}
+.review-field:focus{
+  outline:none;
+  border-color:var(--gold);
+  border-left-width:2px;
+  padding-left:12px;
+}
+.grants-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.grant-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);
+  padding:5px 10px;font-size:12px;color:var(--tx2);
+}
+.grant-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.review-footer{
+  padding:14px 28px;
+  border-top:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.review-note{font-size:11.5px;color:var(--tx3);line-height:1.55;max-width:380px}
+.btn-approve{
+  background:var(--teal);border:none;border-radius:var(--r);
+  padding:9px 18px;
+  font-size:13px;font-weight:600;color:#fff;font-family:var(--ff-body);
+  cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  transition:background .15s;white-space:nowrap;flex-shrink:0;
+}
+.btn-approve:hover{background:var(--teal-h)}
+.btn-approve:disabled{opacity:.5;cursor:not-allowed}
+.btn-approve svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Result card ──────────────────────────────────────────────────────────── */
+.result-card{
+  display:none;
+  background:var(--bg2);border:1px solid var(--bd);
+  border-radius:var(--rxl);overflow:hidden;
+  margin-top:20px;
+  animation:slideUp .35s ease;
+}
+.result-card.visible{display:block}
+.result-hd{
+  padding:24px 32px 20px;
+  border-bottom:1px solid var(--bd);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+}
+.result-name{
+  font-family:var(--ff-display);font-size:20px;font-weight:800;
+  color:var(--tx);letter-spacing:-.03em;margin-bottom:4px;
+}
+.result-meta{font-size:12px;color:var(--tx3)}
+.score-pill{
+  display:flex;align-items:center;gap:6px;
+  background:var(--teal-d);border:1px solid rgba(0,184,124,.2);
+  border-radius:20px;padding:5px 12px;flex-shrink:0;
+}
+html.light .score-pill{background:#dcf5ed;border-color:rgba(0,150,100,.25)}
+.score-dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+.score-text{font-size:12px;font-weight:600;color:var(--teal-t)}
+.result-tabs{
+  display:flex;gap:0;
+  border-bottom:1px solid var(--bd);
+  padding:0 32px;
+}
+.tab-btn{
+  padding:12px 0;margin-right:24px;
+  font-size:13px;font-weight:500;color:var(--tx3);
+  background:none;border:none;border-bottom:2px solid transparent;
+  cursor:pointer;font-family:var(--ff-body);
+  transition:color .15s,border-color .15s;
+}
+.tab-btn:hover{color:var(--tx2)}
+.tab-btn.active{color:var(--teal-t);border-bottom-color:var(--teal)}
+.tab-content{display:none;padding:24px 32px}
+.tab-content.active{display:block}
+.plan-output{
+  font-size:13.5px;line-height:1.8;color:var(--tx2);
+  white-space:pre-wrap;font-family:var(--ff-body);
+}
+.grants-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.grant-card{
+  background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:16px;transition:border-color .15s;
+}
+.grant-card:hover{border-color:var(--bd3)}
+.grant-name{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.grant-provider{font-size:11px;color:var(--tx3);margin-bottom:10px}
+.grant-amount{
+  font-family:var(--ff-display);font-size:16px;font-weight:700;
+  color:var(--teal-t);margin-bottom:8px;
+}
+.grant-match{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:600;color:var(--tx3);
+}
+.match-bar-wrap{background:var(--bg4);border-radius:3px;height:4px;width:80px;margin-top:8px}
+.match-bar{background:var(--teal);border-radius:3px;height:4px;transition:width .6s ease}
+.result-actions{
+  padding:14px 32px;border-top:1px solid var(--bd);
+  display:flex;gap:8px;align-items:center;
+}
+.btn-action{
+  background:none;border:1px solid var(--bd2);border-radius:var(--r);
+  padding:7px 14px;font-size:13px;font-weight:500;color:var(--tx);
+  font-family:var(--ff-body);cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  transition:border-color .15s,color .15s,background .15s;
+}
+.btn-action:hover{border-color:var(--bd3);color:var(--tx)}
+.btn-action.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn-action.primary:hover{background:var(--teal-h);border-color:var(--teal-h)}
+.btn-action.ghost{color:var(--tx2)}
+.btn-action svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-action.ml-auto{margin-left:auto}
+
+/* ── Error box ────────────────────────────────────────────────────────────── */
+.error-box{
+  display:none;
+  background:var(--err-d);border:1px solid rgba(224,85,85,.3);
+  border-radius:var(--rl);padding:14px 18px;
+  font-size:13px;color:#f09090;
+  margin-top:16px;
+}
+.error-box.visible{display:block}
+
+/* ── FAQ ──────────────────────────────────────────────────────────────────── */
+.faq-section{margin-top:72px;padding-bottom:40px}
+.faq-title{
+  font-family:var(--ff-display);font-size:22px;font-weight:800;
+  letter-spacing:-.025em;color:var(--tx);margin-bottom:6px;
+}
+.faq-sub{font-size:13px;color:var(--tx3);margin-bottom:28px}
+.faq-item{
+  border:1px solid var(--bd);border-radius:var(--rl);
+  margin-bottom:8px;overflow:hidden;
+  transition:border-color .2s;
+}
+.faq-item:hover{border-color:var(--bd2)}
+.faq-item.open{border-color:var(--bd2)}
+.faq-q{
+  width:100%;background:var(--bg2);border:none;
+  padding:16px 20px;text-align:left;
+  font-size:13.5px;font-weight:600;color:var(--tx);
+  cursor:pointer;font-family:var(--ff-body);
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  transition:background .15s;
+}
+.faq-q:hover{background:var(--bg3)}
+.faq-chevron{
+  flex-shrink:0;width:16px;height:16px;
+  color:var(--teal);transition:transform .25s;
+}
+.faq-item.open .faq-chevron{transform:rotate(180deg)}
+.faq-a{
+  display:none;padding:0 20px 16px;
+  font-size:13px;line-height:1.75;color:var(--tx2);
+  background:var(--bg2);
+}
+.faq-item.open .faq-a{display:block}
+.faq-a ul{padding-left:18px;margin:8px 0}
+.faq-a li{margin-bottom:6px}
+.faq-a strong{color:var(--tx)}
+.faq-a code{
+  background:var(--bg3);border:1px solid var(--bd);
+  border-radius:4px;padding:1px 5px;font-size:12px;color:var(--tx2);
+}
+
+/* ── Nav language selector ────────────────────────────────────────────────── */
+.nav-lang{display:flex;align-items:center}
+.nav-lang select{
+  background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:var(--r);
+  color:var(--tx2);font-family:var(--ff-body);
+  font-size:12px;font-weight:600;letter-spacing:.03em;
+  padding:5px 26px 5px 10px;cursor:pointer;outline:none;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%234e4e68'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;
+  transition:border-color .15s,color .15s;
+}
+.nav-lang select:hover{border-color:var(--bd3);color:var(--tx)}
+html.light .nav-lang select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%239898b0'/%3E%3C/svg%3E");
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media(max-width:640px){
+  .nav{padding:0 20px}
+  .nav-links{display:none}
+  .page{padding:0 20px 80px}
+  /* hero responsive handled in hero CSS block */
+  .plan-types{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .fg-full{grid-column:1}
+  .submit-row{flex-direction:column;align-items:stretch}
+  .lang-wrap{flex:none}
+  .form-card{padding:20px}
+  .review-grid{grid-template-columns:1fr}
+  .result-hd{flex-direction:column}
+  .result-tabs{padding:0 20px}
+  .tab-content{padding:16px 20px}
+  .result-actions{padding:12px 20px;flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="nav-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <span class="nav-name">GrantBridge</span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="scrollToTop()" id="navLinkPlan">Plan Generator</button>
+    <a class="nav-link" href="/ui/grants.html" id="navLinkGrants">Grant Browser</a>
+    <button class="nav-link" onclick="scrollToFaq()" id="navLinkFaq">FAQ</button>
+  </div>
+  <div class="nav-right">
+    <span class="nav-badge">Caribbean AI</span>
+    <div class="nav-lang">
+      <select id="navLang" onchange="onNavLangChange(this.value)">
+        <option value="eng">ENG</option>
+        <option value="nld">NLD</option>
+        <option value="spa">SPA</option>
+        <option value="por">POR</option>
+        <option value="fra">FRA</option>
+      </select>
+    </div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">
+      <svg id="themeIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+
+    <!-- Left: text content -->
+    <div class="hero-left">
+      <div class="hero-eyebrow" id="heroEyebrow">Multi-agent AI platform</div>
+      <h1 class="hero-h1"><span id="heroH1Pre">Your business plan, </span><em id="heroH1Em">grant-ready</em><span id="heroH1Post"> in minutes</span></h1>
+      <p class="hero-sub" id="heroSub">Discover Caribbean funding opportunities and generate a complete, compliant business plan — in your language, tailored to your sector.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="document.getElementById('business_name').focus();document.querySelector('.form-card').scrollIntoView({behavior:'smooth'})">
+          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <span id="ctaStartTxt">Start your plan</span>
+        </button>
+        <a class="btn-secondary" href="/ui/grants.html">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span id="ctaBrowseTxt">Browse grants</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: visual grid -->
+    <div class="hero-right">
+      <div class="hblock hblock-teal">
+        <div class="hblock-label" id="hbl1">Grant programmes</div>
+        <div>
+          <div class="hblock-num">40+</div>
+          <div class="hblock-desc" id="hbd1">IDB, CDB, government &amp; regional funds</div>
+        </div>
+      </div>
+      <div class="hblock hblock-dim">
+        <div class="hblock-label" id="hbl2">Languages</div>
+        <div>
+          <div class="hblock-num">5</div>
+          <div class="hblock-desc" id="hbd2">ENG, NLD, SPA, POR, FRA</div>
+        </div>
+      </div>
+      <div class="hblock hblock-dim">
+        <div class="hblock-label" id="hbl3">AI agents</div>
+        <div>
+          <div class="hblock-num">6</div>
+          <div class="hblock-desc" id="hbd3">Specialised, collaborating pipeline</div>
+        </div>
+      </div>
+      <div class="hblock hblock-dim">
+        <div class="hblock-label" id="hbl4">Generation time</div>
+        <div>
+          <div class="hblock-num">~90s</div>
+          <div class="hblock-desc" id="hbd4">Per stage, 5–10 min total</div>
+        </div>
+      </div>
+      <div class="hblock hblock-dark">
+        <div>
+          <div class="hblock-label" id="hbl5">Pipeline</div>
+          <div class="hblock-desc" id="hbd5">Intake → Research → Review → Write → Review → Finance → Compliance</div>
+        </div>
+        <div class="hblock-pipe">
+          <div class="hpipe-dot lit"></div><div class="hpipe-line lit"></div>
+          <div class="hpipe-dot lit"></div><div class="hpipe-line lit"></div>
+          <div class="hpipe-dot lit"></div><div class="hpipe-line"></div>
+          <div class="hpipe-dot"></div><div class="hpipe-line"></div>
+          <div class="hpipe-dot"></div><div class="hpipe-line"></div>
+          <div class="hpipe-dot"></div><div class="hpipe-line"></div>
+          <div class="hpipe-dot"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-card">
+
+    <!-- Plan type -->
+    <div class="section-label" id="sectionLabelPlan">Plan type</div>
+    <div class="plan-types" id="planTypeSel">
+      <div class="plan-type selected" data-value="grant_application" onclick="selectPlanType(this)">
+        <div class="pt-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6.5L22 9l-5 5 1 7-6-3.5L6 21l1-7L2 9l7-.5z"/></svg>
+        </div>
+        <div class="pt-name" id="ptName1">Grant Application</div>
+        <div class="pt-desc" id="ptDesc1">Full proposal targeting IDB, CDB &amp; government funds</div>
+      </div>
+      <div class="plan-type" data-value="bank_loan" onclick="selectPlanType(this)">
+        <div class="pt-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        </div>
+        <div class="pt-name" id="ptName2">Bank Loan Plan</div>
+        <div class="pt-desc" id="ptDesc2">Structured for commercial bank or credit union review</div>
+      </div>
+      <div class="plan-type" data-value="simple" onclick="selectPlanType(this)">
+        <div class="pt-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="pt-name" id="ptName3">Simple Plan</div>
+        <div class="pt-desc" id="ptDesc3">Lean narrative for pitches and competitions</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Business -->
+    <div class="form-section">
+      <div class="form-section-hd">
+        <div class="fsec-num">1</div>
+        <div class="fsec-title" id="fsec1Title">Business details</div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-lbl" id="lbl_bname">Business name <span class="req">*</span></label>
+          <input class="form-inp" id="business_name" placeholder="e.g. Sunrise Eco Lodge" data-ph="ph_bname">
+        </div>
+        <div class="form-group">
+          <label class="form-lbl" id="lbl_country">Country <span class="req">*</span></label>
+          <input class="form-inp" id="location" placeholder="e.g. Paramaribo, Suriname" data-ph="ph_country">
+        </div>
+        <div class="form-group">
+          <label class="form-lbl" id="lbl_industry">Industry <span class="req">*</span></label>
+          <select class="form-inp" id="industry">
+            <option value="">— Select industry —</option>
+            <option value="agritech">Agritech / Agriculture</option>
+            <option value="fintech">Fintech / Finance</option>
+            <option value="tourism">Tourism / Hospitality</option>
+            <option value="technology">Technology / Software</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="retail">Retail / E-commerce</option>
+            <option value="health">Healthcare / Wellness</option>
+            <option value="education">Education / Training</option>
+            <option value="environment">Environment / Climate</option>
+            <option value="food">Food &amp; Beverage</option>
+            <option value="logistics">Logistics / Transport</option>
+            <option value="creative">Creative Industries</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl" id="lbl_customers">Target customers <span class="req">*</span></label>
+          <input class="form-inp" id="target_customers" placeholder="Who will buy from you?" data-ph="ph_customers">
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-lbl" id="lbl_idea">What does your business do? <span class="req">*</span></label>
+          <textarea class="form-inp" id="startup_idea" placeholder="Describe your core product or service in a few sentences..." data-ph="ph_idea"></textarea>
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-lbl" id="lbl_desc">Business description</label>
+          <textarea class="form-inp" id="business_description" placeholder="Additional context — history, stage, unique aspects..." data-ph="ph_desc"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- Section 2: Founder + Finance -->
+    <div class="form-section">
+      <div class="form-section-hd">
+        <div class="fsec-num">2</div>
+        <div class="fsec-title" id="fsec2Title">Founder &amp; financials</div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group fg-full">
+          <label class="form-lbl" id="lbl_background">Your background</label>
+          <textarea class="form-inp" id="founder_background" style="min-height:64px" placeholder="Relevant experience, qualifications, years in the industry..." data-ph="ph_background"></textarea>
+        </div>
+        <div class="form-group fg-full">
+          <label class="form-lbl" id="lbl_funding">Funding goal &amp; financial expectations <span class="req">*</span></label>
+          <input class="form-inp" id="financial_expectations" placeholder="e.g. USD 50,000 to cover equipment and first 6 months of operations" data-ph="ph_funding">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- Submit -->
+    <div class="submit-row">
+      <input type="hidden" id="outputLang" value="eng">
+      <button class="btn-gen" id="generateBtn" onclick="generatePlan()">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span id="genBtnTxt">Generate business plan</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ERROR -->
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- LOADING -->
+  <div class="loading-card" id="loadingCard">
+    <div class="loading-hd">
+      <div class="spinner"></div>
+      <div class="loading-title" id="loadingTitle">Building your business plan…</div>
+    </div>
+    <div class="loading-sub" id="loadingSub">Our AI agents are working through each section. This takes 60–90 seconds.</div>
+    <div class="pipeline" id="pipelineTrack">
+      <div class="pipe-step"><div class="pipe-dot" id="dot-intake"></div><div class="pipe-line" id="line-0"></div></div>
+      <div class="pipe-step"><div class="pipe-dot" id="dot-grants"></div><div class="pipe-line" id="line-1"></div></div>
+      <div class="pipe-step"><div class="pipe-dot" id="dot-market"></div><div class="pipe-line" id="line-2"></div></div>
+      <div class="pipe-step"><div class="pipe-dot" id="dot-writing"></div><div class="pipe-line" id="line-3"></div></div>
+      <div class="pipe-step"><div class="pipe-dot" id="dot-financial"></div><div class="pipe-line" id="line-4"></div></div>
+      <div class="pipe-step"><div class="pipe-dot" id="dot-compliance"></div><div class="pipe-line" id="line-5"></div></div>
+      <div class="pipe-dot" id="dot-done"></div>
+    </div>
+    <div class="pipe-labels">
+      <div class="pipe-lbl" id="lbl-intake">Intake</div>
+      <div class="pipe-lbl" id="lbl-grants">Grants</div>
+      <div class="pipe-lbl" id="lbl-market">Market</div>
+      <div class="pipe-lbl" id="lbl-writing">Writing</div>
+      <div class="pipe-lbl" id="lbl-financial">Finance</div>
+      <div class="pipe-lbl" id="lbl-compliance">Compliance</div>
+      <div class="pipe-lbl" id="lbl-done">Done</div>
+    </div>
+  </div>
+
+  <!-- REVIEW PANEL 1 -->
+  <div class="review-panel" id="reviewPanel1">
+    <div class="review-hd">
+      <div>
+        <div class="review-title" id="rev1Title">Review your market research</div>
+        <div class="review-subtitle" id="rev1Sub">The research agents have finished. Edit any field before we write your plan — your changes will be incorporated.</div>
+      </div>
+      <div class="review-badge">Step 1 of 2</div>
+    </div>
+    <div class="review-body">
+      <div class="review-grid">
+        <div class="form-group">
+          <label class="form-lbl">Market size &amp; opportunity</label>
+          <textarea class="review-field" id="r1_market_size" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Competitor overview</label>
+          <textarea class="review-field" id="r1_competitors" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label class="form-lbl">Target customer analysis</label>
+        <textarea class="review-field" id="r1_customers" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <div class="form-lbl" style="margin-bottom:8px">Matched grants</div>
+        <div class="grants-list" id="r1_grants"></div>
+      </div>
+    </div>
+    <div class="review-footer">
+      <div class="review-note" id="revNote1">Your edits are incorporated verbatim — the AI will not override your changes.</div>
+      <button class="btn-approve" id="approveBtn1" onclick="approveCheckpoint1()">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="approveBtn1Txt">Approve &amp; continue to plan writing</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- REVIEW PANEL 2 -->
+  <div class="review-panel" id="reviewPanel2">
+    <div class="review-hd">
+      <div>
+        <div class="review-title" id="rev2Title">Review your plan draft</div>
+        <div class="review-subtitle" id="rev2Sub">Your plan draft is ready. Edit any section before we run financial projections and compliance checks.</div>
+      </div>
+      <div class="review-badge">Step 2 of 2</div>
+    </div>
+    <div class="review-body">
+      <div class="review-grid">
+        <div class="form-group">
+          <label class="form-lbl">Executive summary</label>
+          <textarea class="review-field" id="r2_executive_summary" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Problem statement</label>
+          <textarea class="review-field" id="r2_problem_statement" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Solution</label>
+          <textarea class="review-field" id="r2_solution" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Market opportunity</label>
+          <textarea class="review-field" id="r2_market_opportunity" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Business model</label>
+          <textarea class="review-field" id="r2_business_model" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Marketing strategy</label>
+          <textarea class="review-field" id="r2_marketing_strategy" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Operations plan</label>
+          <textarea class="review-field" id="r2_operations_plan" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Funding request</label>
+          <textarea class="review-field" id="r2_funding_request" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="review-footer">
+      <div class="review-note" id="revNote2">Financial projections and compliance checks run after this step.</div>
+      <button class="btn-approve" id="approveBtn2" onclick="approveCheckpoint2()">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="approveBtn2Txt">Approve &amp; generate final plan</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- RESULT CARD -->
+  <div class="result-card" id="resultCard">
+    <div class="result-hd">
+      <div>
+        <div class="result-name" id="resultTitle">Your plan is ready</div>
+        <div class="result-meta" id="resultMeta"></div>
+      </div>
+      <div class="score-pill">
+        <div class="score-dot"></div>
+        <span class="score-text" id="scoreText">Compliance —</span>
+      </div>
+    </div>
+    <div class="result-tabs">
+      <button class="tab-btn active" onclick="showTab('plan',this)" id="tabPlan">Full plan</button>
+      <button class="tab-btn" onclick="showTab('grants',this)" id="tabGrants">Matched grants</button>
+    </div>
+    <div class="tab-content active" id="tab-plan">
+      <div class="plan-output" id="planOutput"></div>
+    </div>
+    <div class="tab-content" id="tab-grants">
+      <div class="grants-grid" id="grantsGrid"></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn-action primary" onclick="downloadPDF()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span id="btnDlPdfTxt">Download PDF</span>
+      </button>
+      <button class="btn-action" onclick="downloadPlan()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span id="btnDlTxtTxt">Download .txt</span>
+      </button>
+      <button class="btn-action" id="copyBtn" onclick="copyPlan()">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        <span id="btnCopyTxt">Copy</span>
+      </button>
+      <button class="btn-action ghost ml-auto" onclick="resetForm()">
+        <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+        <span id="btnResetTxt">Generate another</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="faq-title" id="faqTitle">Frequently asked questions</div>
+    <div class="faq-sub" id="faqSub">Everything you need to know about using GrantBridge AI</div>
+    <div id="faqList"></div>
+  </section>
+
+</main>
+
+<script>
+const API_BASE = window.location.origin;
+
+/* ── State ────────────────────────────────────────────────────────────────── */
+let currentThreadId = null;
+let generatedPlan   = '';
+let businessName    = '';
+let currentLang     = 'en';
+let stepTimer       = null;
+let stepIndex       = 0;
+
+/* ── Theme ────────────────────────────────────────────────────────────────── */
+(function initTheme(){
+  const saved = localStorage.getItem('gb_theme');
+  if(saved === 'light') document.documentElement.classList.add('light');
+  updateThemeIcon();
+})();
+function toggleTheme(){
+  document.documentElement.classList.toggle('light');
+  localStorage.setItem('gb_theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+  updateThemeIcon();
+}
+function updateThemeIcon(){
+  const light = document.documentElement.classList.contains('light');
+  document.getElementById('themeIcon').innerHTML = light
+    ? '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>'
+    : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+}
+
+/* ── Nav helpers ──────────────────────────────────────────────────────────── */
+function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+function scrollToFaq(){ document.getElementById('faq').scrollIntoView({behavior:'smooth'}); }
+
+/* ── Plan type selector ───────────────────────────────────────────────────── */
+function selectPlanType(el){
+  document.querySelectorAll('.plan-type').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function getSelectedPlanType(){
+  const sel = document.querySelector('.plan-type.selected');
+  return sel ? sel.dataset.value : 'grant_application';
+}
+
+/* ── Stepper ──────────────────────────────────────────────────────────────── */
+const STEPS = ['intake','grants','market','writing','financial','compliance','done'];
+const DELAYS = [4000,14000,8000,20000,8000,6000,0];
+function startStepAnimation(){
+  stepIndex = 0;
+  STEPS.forEach((s,i) => {
+    const d = document.getElementById('dot-'+s);
+    const l = document.getElementById('lbl-'+s);
+    if(d){ d.className='pipe-dot'; d.innerHTML=''; }
+    if(l) l.className='pipe-lbl';
+    const ln = document.getElementById('line-'+i);
+    if(ln) ln.className='pipe-line';
+  });
+  advanceStep();
+}
+function advanceStep(){
+  if(stepIndex >= STEPS.length) return;
+  const s = STEPS[stepIndex];
+  if(stepIndex > 0){
+    const prev = STEPS[stepIndex-1];
+    const pd = document.getElementById('dot-'+prev);
+    const pl = document.getElementById('lbl-'+prev);
+    if(pd){ pd.className='pipe-dot done'; pd.innerHTML='<svg viewBox="0 0 24 24" stroke="white" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
+    if(pl) pl.className='pipe-lbl done';
+    const ln = document.getElementById('line-'+(stepIndex-1));
+    if(ln) ln.className='pipe-line done';
+  }
+  const d = document.getElementById('dot-'+s);
+  const l = document.getElementById('lbl-'+s);
+  if(d) d.className='pipe-dot active';
+  if(l) l.className='pipe-lbl active';
+  stepIndex++;
+  if(DELAYS[stepIndex-1]) stepTimer = setTimeout(advanceStep, DELAYS[stepIndex-1]);
+}
+function stopStepAnimation(){
+  if(stepTimer) clearTimeout(stepTimer);
+  stepTimer = null;
+}
+
+/* ── Validation ───────────────────────────────────────────────────────────── */
+function showError(msg){
+  const b = document.getElementById('errorBox');
+  b.textContent = msg; b.classList.add('visible');
+  b.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function clearError(){ document.getElementById('errorBox').classList.remove('visible'); }
+
+/* ── Generate ─────────────────────────────────────────────────────────────── */
+async function generatePlan(){
+  clearError();
+  const planType  = getSelectedPlanType();
+  const outputLang = document.getElementById('outputLang').value;
+  businessName    = document.getElementById('business_name').value.trim();
+
+  const required = {
+    business_name: businessName,
+    startup_idea:  document.getElementById('startup_idea').value.trim(),
+    location:      document.getElementById('location').value.trim(),
+    target_customers: document.getElementById('target_customers').value.trim(),
+    financial_expectations: document.getElementById('financial_expectations').value.trim(),
+  };
+  const missing = Object.entries(required).filter(([,v]) => !v).map(([k]) => k.replace(/_/g,' '));
+  if(missing.length){ showError('Please fill in: ' + missing.join(', ')); return; }
+
+  const payload = {
+    ...required,
+    industry:         document.getElementById('industry').value,
+    founder_background: document.getElementById('founder_background').value.trim(),
+    business_description: document.getElementById('business_description').value.trim(),
+    plan_type:  planType,
+    language:   outputLang,
+  };
+
+  document.getElementById('generateBtn').disabled = true;
+  document.getElementById('loadingCard').classList.add('visible');
+  document.getElementById('reviewPanel1').classList.remove('visible');
+  document.getElementById('reviewPanel2').classList.remove('visible');
+  document.getElementById('resultCard').classList.remove('visible');
+  startStepAnimation();
+  window.scrollTo({top: document.getElementById('loadingCard').offsetTop - 80, behavior:'smooth'});
+
+  try{
+    const res = await fetch(`${API_BASE}/generate/start`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload),
+    });
+    if(!res.ok){ const e = await res.json(); throw new Error(e.detail || `Server error ${res.status}`); }
+    const data = await res.json();
+    stopStepAnimation();
+    document.getElementById('loadingCard').classList.remove('visible');
+    if(data.status === 'checkpoint'){
+      currentThreadId = data.thread_id;
+      showCheckpoint(data);
+    } else {
+      showResult(data, planType, outputLang);
+    }
+  } catch(err){
+    stopStepAnimation();
+    document.getElementById('loadingCard').classList.remove('visible');
+    try{
+      const res2 = await fetch(`${API_BASE}/generate`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload),
+      });
+      if(!res2.ok){ const e2 = await res2.json(); throw new Error(e2.detail || `Server error ${res2.status}`); }
+      const data2 = await res2.json();
+      showResult(data2, planType, outputLang);
+    } catch(err2){
+      showError('Connection error: ' + err2.message);
+      document.getElementById('generateBtn').disabled = false;
+    }
+  }
+}
+
+/* ── Checkpoint display ───────────────────────────────────────────────────── */
+function showCheckpoint(data){
+  document.getElementById('loadingCard').classList.remove('visible');
+  document.getElementById('reviewPanel1').classList.remove('visible');
+  document.getElementById('reviewPanel2').classList.remove('visible');
+  const panel = data.checkpoint === 1 ? 'reviewPanel1' : 'reviewPanel2';
+  const raw = data.review_data || {};
+  const review = raw.data || raw;
+
+  if(data.checkpoint === 1){
+    document.getElementById('r1_market_size').value  = review.market_size || '';
+    document.getElementById('r1_competitors').value  = review.competitor_overview || '';
+    document.getElementById('r1_customers').value    = review.target_customer_analysis || '';
+    const grantsEl = document.getElementById('r1_grants');
+    grantsEl.innerHTML = '';
+    const grants = review.best_matching_grants || [];
+    if(grants.length){
+      grants.forEach(g => {
+        const name = g.name || g.grant_name || 'Grant';
+        const amt  = g.max_amount_usd ? ` · up to $${Number(g.max_amount_usd).toLocaleString()}` : '';
+        grantsEl.innerHTML += `<span class="grant-tag"><span class="grant-dot"></span>${name}${amt}</span>`;
+      });
+    } else {
+      grantsEl.innerHTML = '<span style="font-size:12px;color:var(--tx3)">No specific grants matched yet — will search further after review.</span>';
+    }
+  } else {
+    ['executive_summary','problem_statement','solution','market_opportunity',
+     'business_model','marketing_strategy','operations_plan','funding_request'].forEach(f => {
+      const el = document.getElementById('r2_'+f);
+      if(el) el.value = review[f] || '';
+    });
+  }
+
+  setTimeout(() => {
+    document.getElementById(panel).classList.add('visible');
+    document.getElementById(panel).scrollIntoView({behavior:'smooth',block:'start'});
+  }, 50);
+}
+
+/* ── Approve checkpoints ──────────────────────────────────────────────────── */
+async function approveCheckpoint(num, edits){
+  const planType   = getSelectedPlanType();
+  const outputLang = document.getElementById('outputLang').value;
+  const btnId      = num === 1 ? 'approveBtn1' : 'approveBtn2';
+  const btn        = document.getElementById(btnId);
+  btn.disabled = true;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg> Processing…';
+
+  document.getElementById('loadingCard').classList.add('visible');
+  document.getElementById('reviewPanel1').classList.remove('visible');
+  document.getElementById('reviewPanel2').classList.remove('visible');
+  startStepAnimation();
+  window.scrollTo({top: document.getElementById('loadingCard').offsetTop - 80, behavior:'smooth'});
+
+  try{
+    const res = await fetch(`${API_BASE}/generate/resume`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({thread_id:currentThreadId, checkpoint:num, approved:true, edits}),
+    });
+    if(!res.ok){ const e = await res.json(); throw new Error(e.detail || `Server error ${res.status}`); }
+    const data = await res.json();
+    stopStepAnimation();
+    document.getElementById('loadingCard').classList.remove('visible');
+    if(data.status === 'checkpoint'){
+      showCheckpoint(data);
+    } else {
+      showResult(data, planType, outputLang);
+    }
+  } catch(err){
+    stopStepAnimation();
+    document.getElementById('loadingCard').classList.remove('visible');
+    showError('Resume error: ' + err.message);
+    btn.disabled = false;
+    btn.innerHTML = num===1
+      ? '<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Approve &amp; continue to plan writing'
+      : '<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Approve &amp; generate final plan';
+  }
+}
+function approveCheckpoint1(){
+  approveCheckpoint(1,{
+    market_size:              document.getElementById('r1_market_size').value.trim(),
+    competitor_overview:      document.getElementById('r1_competitors').value.trim(),
+    target_customer_analysis: document.getElementById('r1_customers').value.trim(),
+  });
+}
+function approveCheckpoint2(){
+  const edits = {};
+  ['executive_summary','problem_statement','solution','market_opportunity',
+   'business_model','marketing_strategy','operations_plan','funding_request'].forEach(f => {
+    const el = document.getElementById('r2_'+f);
+    if(el && el.value.trim()) edits[f] = el.value.trim();
+  });
+  approveCheckpoint(2, edits);
+}
+
+/* ── Show result ──────────────────────────────────────────────────────────── */
+function showResult(data, planType, outputLang){
+  document.getElementById('loadingCard').classList.remove('visible');
+  generatedPlan = data.final_plan || '';
+  const score   = Math.round((data.compliance_score || 0) * 100);
+  const revs    = data.revision_count || 0;
+  const ptLabels = {grant_application:'Grant Application',bank_loan:'Bank Loan Plan',simple:'Simple Plan'};
+  document.getElementById('resultTitle').textContent = `${data.business_name || businessName} — ${ptLabels[planType] || planType}`;
+  document.getElementById('resultMeta').textContent  = `${outputLang.toUpperCase()} · ${generatedPlan.split(/\s+/).length.toLocaleString()} words · ${revs} revision${revs!==1?'s':''} · compliance checked`;
+  document.getElementById('scoreText').textContent   = `Compliance ${score}%`;
+  document.getElementById('planOutput').textContent  = generatedPlan;
+
+  const grantsGrid = document.getElementById('grantsGrid');
+  grantsGrid.innerHTML = '';
+  const grants = data.grants_matched || [];
+  if(!grants.length){
+    grantsGrid.innerHTML = '<p style="font-size:13px;color:var(--tx3)">No grants matched for this profile.</p>';
+  } else {
+    grants.forEach(g => {
+      const pct = Math.round((g.match_score||0)*100);
+      const amt = g.max_amount_usd ? `$${Number(g.max_amount_usd).toLocaleString()}` : '—';
+      grantsGrid.innerHTML += `<div class="grant-card">
+        <div class="grant-name">${g.name||g.grant_name||'Grant'}</div>
+        <div class="grant-provider">${g.provider||''}</div>
+        <div class="grant-amount">Up to ${amt}</div>
+        <div class="grant-match">Match ${pct}%</div>
+        <div class="match-bar-wrap"><div class="match-bar" style="width:${pct}%"></div></div>
+      </div>`;
+    });
+  }
+
+  document.getElementById('generateBtn').disabled = false;
+  document.getElementById('resultCard').classList.add('visible');
+  document.getElementById('resultCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+function showTab(name, btn){
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── Download / copy ──────────────────────────────────────────────────────── */
+function downloadPlan(){
+  const blob = new Blob([generatedPlan],{type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${(businessName||'Business_Plan').replace(/\s+/g,'_')}_Plan.txt`;
+  a.click();
+}
+function downloadPDF(){
+  if(!generatedPlan) return;
+  const name = (businessName||'Business_Plan').replace(/\s+/g,'_');
+  const lines = generatedPlan.split('\n');
+  let html = '';
+  lines.forEach(line => {
+    const t = line.trim();
+    if(!t){ html += '<div style="height:10px"></div>'; return; }
+    if(t.startsWith('# '))      { html += `<h1>${t.slice(2)}</h1>`; return; }
+    if(t.startsWith('## '))     { html += `<h2>${t.slice(3)}</h2>`; return; }
+    if(t.startsWith('### '))    { html += `<h3>${t.slice(4)}</h3>`; return; }
+    if(t.startsWith('- ') || t.startsWith('* ')){ html += `<li>${t.slice(2)}</li>`; return; }
+    if(/^\d+\.\s/.test(t))     { html += `<li>${t.replace(/^\d+\.\s/,'')}</li>`; return; }
+    html += `<p>${t}</p>`;
+  });
+  const win = window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${name}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>*{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Open Sans',Arial,sans-serif;font-size:11pt;color:#1a1a1a;line-height:1.7}
+  .cover{background:#0f0f12;color:#fff;padding:56px 48px;min-height:180px}
+  .cover-name{font-size:26pt;font-weight:700;color:#00b87c;margin-bottom:6px;letter-spacing:-.02em}
+  .cover-sub{font-size:12pt;color:rgba(255,255,255,.6);margin-bottom:14px}
+  .cover-url{font-size:9pt;color:rgba(255,255,255,.3)}
+  .content{padding:48px}
+  h1{font-size:17pt;font-weight:700;color:#0f6e56;margin:28px 0 10px;padding-bottom:5px;border-bottom:2px solid #00b87c}
+  h2{font-size:13pt;font-weight:600;color:#1a1a1a;margin:20px 0 7px}
+  h3{font-size:11pt;font-weight:600;color:#444;margin:16px 0 5px}
+  p{margin-bottom:9px}li{margin:0 0 5px 22px}
+  .footer{margin-top:48px;padding:16px 48px;border-top:1px solid #eee;font-size:9pt;color:#999;display:flex;justify-content:space-between}
+  .fab{position:fixed;bottom:20px;right:20px;display:flex;gap:8px}
+  .fab button{background:#00b87c;color:#fff;border:none;padding:10px 20px;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600}
+  .fab .close{background:#333}
+  @media print{.fab{display:none}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}.cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  </style></head><body>
+  <div class="cover"><div class="cover-name">${businessName||name}</div><div class="cover-sub">Business Plan</div><div class="cover-url">Generated by GrantBridge AI · grantbridge.soleilalfred.com · ${new Date().toLocaleDateString()}</div></div>
+  <div class="content">${html}</div>
+  <div class="footer"><span>GrantBridge AI — Caribbean Entrepreneur Platform</span><span>${new Date().toLocaleDateString()}</span></div>
+  <div class="fab"><button onclick="window.print()">Save as PDF</button><button class="close" onclick="window.close()">✕</button></div>
+  </body></html>`);
+  win.document.close();
+  setTimeout(()=>win.focus(),300);
+}
+function copyPlan(){
+  const btn = document.getElementById('copyBtn');
+  const copy = () => {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    setTimeout(()=>{ btn.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy'; }, 2000);
+  };
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(generatedPlan).then(copy);
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = generatedPlan;
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    copy();
+  }
+}
+
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+function resetForm(){
+  currentThreadId = null; generatedPlan = ''; businessName = '';
+  document.getElementById('resultCard').classList.remove('visible');
+  document.getElementById('reviewPanel1').classList.remove('visible');
+  document.getElementById('reviewPanel2').classList.remove('visible');
+  document.getElementById('loadingCard').classList.remove('visible');
+  document.getElementById('generateBtn').disabled = false;
+  clearError();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── Translations ─────────────────────────────────────────────────────────── */
+const LANG = {
+  eng: {
+    faqTitle: 'Frequently asked questions',
+    faqSub:   'Everything you need to know about using GrantBridge AI',
+    navFaq:   'FAQ',
+    navPlan:  'Plan Generator',
+    navGrants:'Grant Browser',
+    genBtn:   'Generate business plan',
+    heroSub:  'Discover Caribbean funding opportunities and generate a complete, compliant business plan — in your language, tailored to your sector.',
+    ctaStart: 'Start your plan',
+    ctaBrowse:'Browse grants',
+    faq: [
+      {
+        q: 'What is GrantBridge AI and who is it for?',
+        a: 'GrantBridge AI is a multi-agent AI platform built for Caribbean entrepreneurs. It helps you discover funding opportunities, generate a complete business plan, and produce a polished grant proposal — all in one place. Designed for small business owners who need funding but may not know where to look or how to write a formal application.'
+      },
+      {
+        q: 'What are the three plan types and which should I choose?',
+        a: '<strong>Grant Application</strong> — choose this to apply for a grant from a government programme or development bank (IDB, CDB). The system finds matching grants and writes a targeted proposal.<br><br><strong>Bank Loan Plan</strong> — for a commercial bank or credit union application. Includes financial projections and repayment analysis.<br><br><strong>Simple Plan</strong> — for an investor pitch, internal use, or competition entry. Skips grant matching and produces a lean narrative plan.'
+      },
+      {
+        q: 'What happens during the two Review Steps?',
+        a: '<strong>Review Step 1</strong> — after the research agents finish, you\'ll see the market data and matched grants. Edit any field, then click Approve and Continue.<br><br><strong>Review Step 2</strong> — after the plan writer finishes, you\'ll see all draft sections. Edit them, then click Approve and Generate Final Plan.<br><br>Your edits are incorporated verbatim — the AI does not override your changes.'
+      },
+      {
+        q: 'How long does it take?',
+        a: 'Each stage takes 60–90 seconds. Since there are two review pauses, total time depends on how quickly you approve each step. Most users complete the full process in 5–10 minutes. A live progress indicator shows which agent is currently running.'
+      },
+      {
+        q: 'Which languages are supported?',
+        a: '<ul><li><strong>ENG</strong> — English (Jamaica, Barbados, Trinidad, Guyana)</li><li><strong>NLD</strong> — Nederlands / Dutch (Suriname, Aruba, Curaçao)</li><li><strong>SPA</strong> — Español / Spanish (Dominican Republic, Cuba)</li><li><strong>POR</strong> — Português / Portuguese (Brazil-adjacent zones)</li><li><strong>FRA</strong> — Français / French (Haiti, Martinique, Guadeloupe)</li></ul><br>The entire plan — headings, body, and financial labels — will be written in your chosen language.'
+      },
+      {
+        q: 'Can I download my business plan?',
+        a: 'Yes. Once complete you\'ll see two download options: <strong>Download PDF</strong> (a formatted document with a branded cover page, ready to share) and <strong>Download .txt</strong> (plain Markdown you can open in Word, Google Docs, or any text editor). There\'s also a Copy to Clipboard button.'
+      },
+      {
+        q: 'Are the grant recommendations real and current?',
+        a: 'Recommendations come from a curated database of verified Caribbean funding programmes, plus live web search. Always verify eligibility and deadlines directly with the funding organisation before submitting. Application URLs are provided on each grant card.'
+      },
+      {
+        q: 'What should I do if generation stops or fails?',
+        a: 'If the progress bar stops for more than 3 minutes: refresh and resubmit — it usually completes on the second attempt. Check your internet connection. Try Chrome or Firefox if the issue persists. The system doesn\'t charge per run so you can retry as many times as needed.'
+      }
+    ]
+  },
+
+  nld: {
+    faqTitle: 'Veelgestelde vragen',
+    faqSub:   'Alles wat u moet weten over het gebruik van GrantBridge AI',
+    navFaq:   'FAQ',
+    navPlan:  'Plangenerator',
+    navGrants:'Subsidiebrowser',
+    genBtn:   'Businessplan genereren',
+    heroSub:  'Ontdek financieringsmogelijkheden in het Caribisch gebied en genereer een volledig, conform businessplan — in uw taal, afgestemd op uw sector.',
+    ctaStart: 'Begin uw plan',
+    ctaBrowse:'Subsidies bekijken',
+    faq: [
+      {
+        q: 'Wat is GrantBridge AI en voor wie is het bedoeld?',
+        a: 'GrantBridge AI is een multi-agent AI-platform speciaal gebouwd voor Caribische ondernemers. Het helpt u financieringsmogelijkheden te ontdekken, een volledig businessplan te genereren en een gepolijst subsidieaanvraagdocument te produceren — alles op één plek. Ontworpen voor mkb-eigenaren die financiering nodig hebben maar niet weten waar ze moeten beginnen.'
+      },
+      {
+        q: 'Wat zijn de drie plantypen en welk moet ik kiezen?',
+        a: '<strong>Subsidieaanvraag</strong> — kies dit om een subsidie aan te vragen bij een overheidsprogramma of ontwikkelingsbank (IDB, CDB). Het systeem vindt passende subsidies en schrijft een gerichte aanvraag.<br><br><strong>Banklening Plan</strong> — voor een aanvraag bij een commerciële bank of kredietunie. Inclusief financiële prognoses en terugbetalingsanalyse.<br><br><strong>Eenvoudig Plan</strong> — voor een investeerderspitch, intern gebruik of een wedstrijd. Slaat subsidieonderzoek over en produceert een beknopt narratief plan.'
+      },
+      {
+        q: 'Wat gebeurt er tijdens de twee beoordelingsstappen?',
+        a: '<strong>Beoordelingsstap 1</strong> — nadat de onderzoeksagenten klaar zijn, ziet u de marktgegevens en de gevonden subsidies. Bewerk elk veld en klik op Goedkeuren en Doorgaan.<br><br><strong>Beoordelingsstap 2</strong> — nadat de planschrijver klaar is, ziet u alle conceptsecties. Bewerk ze en klik op Goedkeuren en Eindplan Genereren.<br><br>Uw wijzigingen worden letterlijk overgenomen — de AI overschrijft uw aanpassingen niet.'
+      },
+      {
+        q: 'Hoe lang duurt het?',
+        a: 'Elke fase duurt 60–90 seconden. Omdat er twee beoordelingspauzes zijn, hangt de totale tijd af van hoe snel u elke stap goedkeurt. De meeste gebruikers ronden het volledige proces af in 5–10 minuten. Een live voortgangsindicator toont welke agent momenteel actief is.'
+      },
+      {
+        q: 'Welke talen worden ondersteund?',
+        a: '<ul><li><strong>ENG</strong> — Engels (Jamaica, Barbados, Trinidad, Guyana)</li><li><strong>NLD</strong> — Nederlands (Suriname, Aruba, Curaçao)</li><li><strong>SPA</strong> — Spaans (Dominicaanse Republiek, Cuba)</li><li><strong>POR</strong> — Portugees (Braziliaanse handelszone)</li><li><strong>FRA</strong> — Frans (Haïti, Martinique, Guadeloupe)</li></ul><br>Het volledige plan — inclusief kopjes, tekst en financiële labels — wordt geschreven in uw gekozen taal.'
+      },
+      {
+        q: 'Kan ik mijn businessplan downloaden?',
+        a: 'Ja. Zodra het klaar is, ziet u twee downloadopties: <strong>PDF downloaden</strong> (een opgemaakt document met een branded omslag, klaar om te delen) en <strong>.txt downloaden</strong> (Markdown die u kunt openen in Word, Google Docs of een teksteditor). Er is ook een knop Kopiëren naar klembord.'
+      },
+      {
+        q: 'Zijn de subsidieaanbevelingen echt en actueel?',
+        a: 'Aanbevelingen komen uit een samengestelde database van geverifieerde Caribische financieringsprogramma\'s, aangevuld met live webzoekopdrachten. Controleer altijd de geschiktheid en deadlines rechtstreeks bij de financieringsorganisatie voordat u een aanvraag indient. Aanvraag-URL\'s staan op elke subsidiekaart.'
+      },
+      {
+        q: 'Wat moet ik doen als het genereren stopt of mislukt?',
+        a: 'Als de voortgangsbalk meer dan 3 minuten stilstaat: ververs de pagina en dien opnieuw in — het lukt gewoonlijk bij de tweede poging. Controleer uw internetverbinding. Probeer Chrome of Firefox als het probleem aanhoudt. Het systeem rekent geen kosten per aanvraag, dus u kunt zo vaak opnieuw proberen als nodig.'
+      }
+    ]
+  },
+
+  spa: {
+    faqTitle: 'Preguntas frecuentes',
+    faqSub:   'Todo lo que necesita saber sobre el uso de GrantBridge AI',
+    navFaq:   'FAQ',
+    navPlan:  'Generador de planes',
+    navGrants:'Explorar subvenciones',
+    genBtn:   'Generar plan de negocio',
+    heroSub:  'Descubra oportunidades de financiamiento en el Caribe y genere un plan de negocio completo y conforme, en su idioma y adaptado a su sector.',
+    ctaStart: 'Comenzar su plan',
+    ctaBrowse:'Ver subvenciones',
+    faq: [
+      {
+        q: '¿Qué es GrantBridge AI y para quién es?',
+        a: 'GrantBridge AI es una plataforma de IA multi-agente creada para emprendedores del Caribe. Le ayuda a descubrir oportunidades de financiamiento, generar un plan de negocio completo y producir una propuesta de subvención pulida, todo en un solo lugar. Diseñada para pequeños empresarios que necesitan financiamiento pero no saben dónde buscar.'
+      },
+      {
+        q: '¿Cuáles son los tres tipos de plan y cuál debo elegir?',
+        a: '<strong>Solicitud de subvención</strong> — elija esto para solicitar una subvención de un programa gubernamental o banco de desarrollo (BID, BDC). El sistema encuentra subvenciones compatibles y redacta una propuesta dirigida.<br><br><strong>Plan de préstamo bancario</strong> — para una solicitud en un banco comercial o cooperativa de crédito. Incluye proyecciones financieras y análisis de reembolso.<br><br><strong>Plan simple</strong> — para un pitch de inversión, uso interno o concurso. Omite la búsqueda de subvenciones y produce un plan narrativo conciso.'
+      },
+      {
+        q: '¿Qué ocurre durante los dos pasos de revisión?',
+        a: '<strong>Paso de revisión 1</strong> — cuando los agentes de investigación terminen, verá los datos de mercado y las subvenciones encontradas. Edite cualquier campo y haga clic en Aprobar y continuar.<br><br><strong>Paso de revisión 2</strong> — cuando el redactor termine, verá todas las secciones del borrador. Edítelas y haga clic en Aprobar y generar plan final.<br><br>Sus ediciones se incorporan literalmente: la IA no anula sus cambios.'
+      },
+      {
+        q: '¿Cuánto tiempo toma?',
+        a: 'Cada etapa toma entre 60 y 90 segundos. Como hay dos pausas de revisión, el tiempo total depende de la rapidez con que apruebe cada paso. La mayoría de los usuarios completan el proceso en 5–10 minutos. Un indicador de progreso en vivo muestra qué agente está trabajando.'
+      },
+      {
+        q: '¿Qué idiomas se admiten?',
+        a: '<ul><li><strong>ENG</strong> — Inglés (Jamaica, Barbados, Trinidad, Guyana)</li><li><strong>NLD</strong> — Neerlandés / Dutch (Surinam, Aruba, Curaçao)</li><li><strong>SPA</strong> — Español (República Dominicana, Cuba)</li><li><strong>POR</strong> — Portugués (zonas comerciales de Brasil)</li><li><strong>FRA</strong> — Francés (Haití, Martinica, Guadalupe)</li></ul><br>Todo el plan — encabezados, cuerpo y etiquetas financieras — se escribirá en el idioma elegido.'
+      },
+      {
+        q: '¿Puedo descargar mi plan de negocio?',
+        a: 'Sí. Una vez completo, verá dos opciones de descarga: <strong>Descargar PDF</strong> (documento con portada de marca, listo para compartir) y <strong>Descargar .txt</strong> (Markdown que puede abrir en Word, Google Docs o cualquier editor de texto). También hay un botón de copiar al portapapeles.'
+      },
+      {
+        q: '¿Las recomendaciones de subvenciones son reales y actuales?',
+        a: 'Las recomendaciones provienen de una base de datos curada de programas de financiamiento del Caribe verificados, más búsqueda web en tiempo real. Siempre verifique la elegibilidad y los plazos directamente con la organización financiadora antes de presentar su solicitud. Las URL de solicitud aparecen en cada tarjeta de subvención.'
+      },
+      {
+        q: '¿Qué hago si la generación se detiene o falla?',
+        a: 'Si la barra de progreso se detiene más de 3 minutos: actualice la página y vuelva a enviar — generalmente se completa en el segundo intento. Compruebe su conexión a internet. Pruebe Chrome o Firefox si el problema persiste. El sistema no cobra por intento, así que puede reintentar las veces que necesite.'
+      }
+    ]
+  },
+
+  por: {
+    faqTitle: 'Perguntas frequentes',
+    faqSub:   'Tudo o que precisa saber sobre o uso do GrantBridge AI',
+    navFaq:   'FAQ',
+    navPlan:  'Gerador de planos',
+    navGrants:'Explorar subsídios',
+    genBtn:   'Gerar plano de negócios',
+    heroSub:  'Descubra oportunidades de financiamento no Caribe e gere um plano de negócios completo e em conformidade — no seu idioma, adaptado ao seu setor.',
+    ctaStart: 'Começar seu plano',
+    ctaBrowse:'Ver subsídios',
+    faq: [
+      {
+        q: 'O que é o GrantBridge AI e para quem é?',
+        a: 'O GrantBridge AI é uma plataforma de IA multi-agente criada para empreendedores caribenhos. Ajuda-o a descobrir oportunidades de financiamento, gerar um plano de negócios completo e produzir uma proposta de subsídio polida — tudo num só lugar. Desenvolvida para pequenos empresários que precisam de financiamento mas não sabem por onde começar.'
+      },
+      {
+        q: 'Quais são os três tipos de plano e qual devo escolher?',
+        a: '<strong>Candidatura a subsídio</strong> — escolha este para candidatar-se a um subsídio de um programa governamental ou banco de desenvolvimento (BID, BDC). O sistema encontra subsídios compatíveis e redige uma proposta direcionada.<br><br><strong>Plano de empréstimo bancário</strong> — para candidatura num banco comercial ou cooperativa de crédito. Inclui projeções financeiras e análise de reembolso.<br><br><strong>Plano simples</strong> — para apresentação a investidores, uso interno ou concurso. Ignora a pesquisa de subsídios e produz um plano narrativo conciso.'
+      },
+      {
+        q: 'O que acontece durante as duas etapas de revisão?',
+        a: '<strong>Etapa de revisão 1</strong> — depois de os agentes de pesquisa terminarem, verá os dados de mercado e os subsídios encontrados. Edite qualquer campo e clique em Aprovar e continuar.<br><br><strong>Etapa de revisão 2</strong> — depois de o redator terminar, verá todas as secções do rascunho. Edite-as e clique em Aprovar e gerar plano final.<br><br>As suas edições são incorporadas literalmente — a IA não substitui as suas alterações.'
+      },
+      {
+        q: 'Quanto tempo demora?',
+        a: 'Cada etapa demora entre 60 e 90 segundos. Como existem duas pausas de revisão, o tempo total depende da rapidez com que aprova cada passo. A maioria dos utilizadores conclui o processo em 5–10 minutos. Um indicador de progresso em direto mostra qual o agente em funcionamento.'
+      },
+      {
+        q: 'Quais idiomas são suportados?',
+        a: '<ul><li><strong>ENG</strong> — Inglês (Jamaica, Barbados, Trinidad, Guiana)</li><li><strong>NLD</strong> — Neerlandês / Dutch (Suriname, Aruba, Curaçao)</li><li><strong>SPA</strong> — Espanhol (República Dominicana, Cuba)</li><li><strong>POR</strong> — Português (zonas comerciais do Brasil)</li><li><strong>FRA</strong> — Francês (Haiti, Martinica, Guadalupe)</li></ul><br>Todo o plano — títulos, corpo e etiquetas financeiras — será escrito no idioma escolhido.'
+      },
+      {
+        q: 'Posso descarregar o meu plano de negócios?',
+        a: 'Sim. Quando estiver completo, verá duas opções de download: <strong>Descarregar PDF</strong> (documento formatado com capa personalizada, pronto para partilhar) e <strong>Descarregar .txt</strong> (Markdown que pode abrir no Word, Google Docs ou qualquer editor de texto). Existe também um botão Copiar para área de transferência.'
+      },
+      {
+        q: 'As recomendações de subsídios são reais e atuais?',
+        a: 'As recomendações provêm de uma base de dados curada de programas de financiamento caribenhos verificados, mais pesquisa web em tempo real. Verifique sempre a elegibilidade e os prazos diretamente com a organização financiadora antes de submeter a sua candidatura. Os URLs de candidatura constam em cada cartão de subsídio.'
+      },
+      {
+        q: 'O que faço se a geração parar ou falhar?',
+        a: 'Se a barra de progresso parar mais de 3 minutos: atualize a página e resubmeta — geralmente conclui na segunda tentativa. Verifique a sua ligação à internet. Experimente o Chrome ou Firefox se o problema persistir. O sistema não cobra por tentativa, por isso pode tentar quantas vezes precisar.'
+      }
+    ]
+  },
+
+  fra: {
+    faqTitle: 'Questions fréquentes',
+    faqSub:   'Tout ce que vous devez savoir sur l\'utilisation de GrantBridge AI',
+    navFaq:   'FAQ',
+    navPlan:  'Générateur de plans',
+    navGrants:'Explorer les subventions',
+    genBtn:   'Générer le plan d\'affaires',
+    heroSub:  'Découvrez les opportunités de financement des Caraïbes et générez un plan d\'affaires complet et conforme — dans votre langue, adapté à votre secteur.',
+    ctaStart: 'Commencer votre plan',
+    ctaBrowse:'Voir les subventions',
+    faq: [
+      {
+        q: 'Qu\'est-ce que GrantBridge AI et à qui s\'adresse-t-il?',
+        a: 'GrantBridge AI est une plateforme d\'IA multi-agents conçue pour les entrepreneurs des Caraïbes. Elle vous aide à découvrir des opportunités de financement, à générer un plan d\'affaires complet et à produire une proposition de subvention soignée — le tout en un seul endroit. Conçue pour les petits entrepreneurs qui ont besoin de financement mais ne savent pas où chercher.'
+      },
+      {
+        q: 'Quels sont les trois types de plan et lequel choisir?',
+        a: '<strong>Demande de subvention</strong> — choisissez ceci pour postuler à une subvention d\'un programme gouvernemental ou d\'une banque de développement (BID, BDC). Le système trouve des subventions correspondantes et rédige une proposition ciblée.<br><br><strong>Plan de prêt bancaire</strong> — pour une demande auprès d\'une banque commerciale ou d\'une coopérative de crédit. Comprend des projections financières et une analyse de remboursement.<br><br><strong>Plan simple</strong> — pour une présentation à des investisseurs, un usage interne ou un concours. Ignore la recherche de subventions et produit un plan narratif concis.'
+      },
+      {
+        q: 'Que se passe-t-il lors des deux étapes de révision?',
+        a: '<strong>Étape de révision 1</strong> — une fois les agents de recherche terminés, vous verrez les données de marché et les subventions trouvées. Modifiez n\'importe quel champ, puis cliquez sur Approuver et continuer.<br><br><strong>Étape de révision 2</strong> — une fois le rédacteur terminé, vous verrez toutes les sections du brouillon. Modifiez-les, puis cliquez sur Approuver et générer le plan final.<br><br>Vos modifications sont intégrées verbatim — l\'IA ne remplace pas vos changements.'
+      },
+      {
+        q: 'Combien de temps cela prend-il?',
+        a: 'Chaque étape prend 60 à 90 secondes. Comme il y a deux pauses de révision, le temps total dépend de la rapidité à laquelle vous approuvez chaque étape. La plupart des utilisateurs terminent le processus en 5 à 10 minutes. Un indicateur de progression en direct montre quel agent est en cours d\'exécution.'
+      },
+      {
+        q: 'Quelles langues sont prises en charge?',
+        a: '<ul><li><strong>ENG</strong> — Anglais (Jamaïque, Barbade, Trinidad, Guyana)</li><li><strong>NLD</strong> — Néerlandais (Suriname, Aruba, Curaçao)</li><li><strong>SPA</strong> — Espagnol (République dominicaine, Cuba)</li><li><strong>POR</strong> — Portugais (zones commerciales du Brésil)</li><li><strong>FRA</strong> — Français (Haïti, Martinique, Guadeloupe)</li></ul><br>L\'intégralité du plan — titres, corps et étiquettes financières — sera rédigée dans la langue choisie.'
+      },
+      {
+        q: 'Puis-je télécharger mon plan d\'affaires?',
+        a: 'Oui. Une fois terminé, vous verrez deux options de téléchargement : <strong>Télécharger le PDF</strong> (document formaté avec une page de couverture personnalisée, prêt à partager) et <strong>Télécharger le .txt</strong> (Markdown que vous pouvez ouvrir dans Word, Google Docs ou tout éditeur de texte). Il y a aussi un bouton Copier dans le presse-papiers.'
+      },
+      {
+        q: 'Les recommandations de subventions sont-elles réelles et actuelles?',
+        a: 'Les recommandations proviennent d\'une base de données organisée de programmes de financement caribéens vérifiés, plus une recherche web en direct. Vérifiez toujours l\'éligibilité et les délais directement auprès de l\'organisation de financement avant de soumettre votre candidature. Les URL de candidature figurent sur chaque carte de subvention.'
+      },
+      {
+        q: 'Que faire si la génération s\'arrête ou échoue?',
+        a: 'Si la barre de progression s\'arrête plus de 3 minutes : actualisez la page et resoumettez — cela fonctionne généralement au deuxième essai. Vérifiez votre connexion internet. Essayez Chrome ou Firefox si le problème persiste. Le système ne facture pas par tentative, vous pouvez donc réessayer autant de fois que nécessaire.'
+      }
+    ]
+  }
+};
+
+/* ── FAQ render + language update ─────────────────────────────────────────── */
+const CHEVRON = '<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+
+function renderFaq(langCode) {
+  const code = langCode.slice(0,3).toLowerCase();
+  const t = LANG[code] || LANG.eng;
+  document.getElementById('faqTitle').textContent = t.faqTitle;
+  document.getElementById('faqSub').textContent   = t.faqSub;
+  const list = document.getElementById('faqList');
+  list.innerHTML = t.faq.map(item => `
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">${item.q}${CHEVRON}</button>
+      <div class="faq-a">${item.a}</div>
+    </div>`).join('');
+}
+
+const UI_STRINGS = {
+  eng: {
+    eyebrow:'Multi-agent AI platform',
+    h1Pre:'Your business plan, ', h1Em:'grant-ready', h1Post:' in minutes',
+    heroSub:'Discover Caribbean funding opportunities and generate a complete, compliant business plan — in your language, tailored to your sector.',
+    heroSub:'Discover Caribbean funding opportunities and generate a complete, compliant business plan — in your language, tailored to your sector.',
+    ctaStart:'Start your plan', ctaBrowse:'Browse grants',
+    navPlan:'Plan Generator', navGrants:'Grant Browser', navFaq:'FAQ',
+    genBtn:'Generate business plan',
+    rev1Title:'Review your market research',
+    rev1Sub:'The research agents have finished. Edit any field before we write your plan — your changes will be incorporated.',
+    rev1Badge:'Step 1 of 2',
+    rev2Title:'Review your plan draft',
+    rev2Sub:'Your plan draft is ready. Edit any section before we run financial projections and compliance checks.',
+    rev2Badge:'Step 2 of 2',
+    approve1:'Approve & continue to plan writing', approve2:'Approve & generate final plan',
+    loadTitle:'Building your business plan…',
+    loadSub:'Our AI agents are working through each section. This takes 60–90 seconds.',
+    revNote1:'Your edits are incorporated verbatim — the AI will not override your changes.',
+    revNote2:'Financial projections and compliance checks run after this step.',
+    sectionPlan:'Plan type',
+    ptName1:'Grant Application',  ptDesc1:'Full proposal targeting IDB, CDB & government funds',
+    ptName2:'Bank Loan Plan',     ptDesc2:'Structured for commercial bank or credit union review',
+    ptName3:'Simple Plan',        ptDesc3:'Lean narrative for pitches and competitions',
+    fsec1:'Business details', fsec2:'Founder & financials',
+    lbl_bname:'Business name',       ph_bname:'e.g. Sunrise Eco Lodge',
+    lbl_country:'Country',           ph_country:'e.g. Paramaribo, Suriname',
+    lbl_industry:'Industry',
+    lbl_customers:'Target customers', ph_customers:'Who will buy from you?',
+    lbl_idea:'What does your business do?', ph_idea:'Describe your core product or service in a few sentences...',
+    lbl_desc:'Business description',       ph_desc:'Additional context — history, stage, unique aspects...',
+    lbl_background:'Your background',      ph_background:'Relevant experience, qualifications, years in the industry...',
+    lbl_funding:'Funding goal & financial expectations', ph_funding:'e.g. USD 50,000 to cover equipment and first 6 months of operations',
+    hbl1:'Grant programmes', hbd1:'IDB, CDB, government & regional funds',
+    hbl2:'Languages',        hbd2:'ENG, NLD, SPA, POR, FRA',
+    hbl3:'AI agents',        hbd3:'Specialised, collaborating pipeline',
+    hbl4:'Generation time',  hbd4:'Per stage, 5–10 min total',
+    hbl5:'Pipeline',         hbd5:'Intake → Research → Review → Write → Review → Finance → Compliance',
+    pipeLabels:['Intake','Grants','Market','Writing','Finance','Compliance','Done'],
+    tabPlan:'Full plan', tabGrants:'Matched grants',
+    btnDlPdf:'Download PDF', btnDlTxt:'Download .txt', btnCopy:'Copy', btnReset:'Generate another',
+  },
+  nld: {
+    eyebrow:'Multi-agent AI platform',
+    h1Pre:'Uw businessplan, ', h1Em:'subsidieklaar', h1Post:' in minuten',
+    heroSub:'Ontdek financieringsmogelijkheden in het Caribisch gebied en genereer een volledig, conform businessplan — in uw taal, afgestemd op uw sector.',
+    ctaStart:'Begin uw plan', ctaBrowse:'Subsidies bekijken',
+    navPlan:'Plangenerator', navGrants:'Subsidiebrowser', navFaq:'FAQ',
+    genBtn:'Businessplan genereren',
+    rev1Title:'Controleer uw marktonderzoek',
+    rev1Sub:'De onderzoeksagenten zijn klaar. Bewerk elk veld voordat we uw plan schrijven — uw wijzigingen worden verwerkt.',
+    rev1Badge:'Stap 1 van 2',
+    rev2Title:'Controleer uw conceptplan',
+    rev2Sub:'Uw conceptplan is klaar. Bewerk secties voordat we financiële prognoses en compliancecontroles uitvoeren.',
+    rev2Badge:'Stap 2 van 2',
+    approve1:'Goedkeuren en doorgaan naar planschrijven', approve2:'Goedkeuren en eindplan genereren',
+    loadTitle:'Uw businessplan wordt opgebouwd…',
+    loadSub:'Onze AI-agenten werken door elke sectie. Dit duurt 60–90 seconden.',
+    revNote1:'Uw wijzigingen worden letterlijk overgenomen — de AI overschrijft uw aanpassingen niet.',
+    revNote2:'Financiële prognoses en compliancecontroles worden na deze stap uitgevoerd.',
+    sectionPlan:'Plantype',
+    ptName1:'Subsidieaanvraag',  ptDesc1:'Volledig voorstel gericht op IDB, CDB en overheidsfondsen',
+    ptName2:'Bankleningplan',    ptDesc2:'Gestructureerd voor commerciële bank of kredietunie',
+    ptName3:'Eenvoudig plan',    ptDesc3:'Beknopt narratief voor pitches en wedstrijden',
+    fsec1:'Bedrijfsgegevens', fsec2:'Oprichter & financiën',
+    lbl_bname:'Bedrijfsnaam',       ph_bname:'bv. Zonsopgang Eco Lodge',
+    lbl_country:'Land',             ph_country:'bv. Paramaribo, Suriname',
+    lbl_industry:'Sector',
+    lbl_customers:'Doelklanten',    ph_customers:'Wie koopt bij u?',
+    lbl_idea:'Wat doet uw bedrijf?', ph_idea:'Beschrijf uw kernproduct of -dienst in een paar zinnen...',
+    lbl_desc:'Bedrijfsbeschrijving', ph_desc:'Extra context — geschiedenis, fase, unieke aspecten...',
+    lbl_background:'Uw achtergrond', ph_background:'Relevante ervaring, kwalificaties, jaren in de sector...',
+    lbl_funding:'Financieringsdoel & verwachtingen', ph_funding:'bv. USD 50.000 voor apparatuur en eerste 6 maanden operaties',
+    hbl1:'Subsidieprogramma’s', hbd1:'IDB, CDB, overheids- en regionale fondsen',
+    hbl2:'Talen',                    hbd2:'ENG, NLD, SPA, POR, FRA',
+    hbl3:'AI-agenten',               hbd3:'Gespecialiseerde, samenwerkende pipeline',
+    hbl4:'Generatietijd',            hbd4:'Per fase, 5–10 min totaal',
+    hbl5:'Pipeline',                 hbd5:'Intake → Onderzoek → Review → Schrijven → Review → Financiën → Compliance',
+    pipeLabels:['Intake','Subsidies','Markt','Schrijven','Financiën','Compliance','Klaar'],
+    tabPlan:'Volledig plan', tabGrants:'Gevonden subsidies',
+    btnDlPdf:'PDF downloaden', btnDlTxt:'.txt downloaden', btnCopy:'Kopiëren', btnReset:'Nieuw plan genereren',
+  },
+  spa: {
+    eyebrow:'Plataforma de IA multi-agente',
+    h1Pre:'Su plan de negocio, ', h1Em:'listo para subvenciones', h1Post:' en minutos',
+    heroSub:'Descubra oportunidades de financiamiento en el Caribe y genere un plan de negocio completo y conforme — en su idioma, adaptado a su sector.',
+    heroSub:'Descubra oportunidades de financiamiento en el Caribe y genere un plan de negocio completo y conforme — en su idioma, adaptado a su sector.',
+    ctaStart:'Comenzar su plan', ctaBrowse:'Ver subvenciones',
+    navPlan:'Generador de planes', navGrants:'Explorar subvenciones', navFaq:'FAQ',
+    genBtn:'Generar plan de negocio',
+    rev1Title:'Revise su investigación de mercado',
+    rev1Sub:'Los agentes de investigación han terminado. Edite cualquier campo antes de redactar su plan — sus cambios serán incorporados.',
+    rev1Badge:'Paso 1 de 2',
+    rev2Title:'Revise el borrador de su plan',
+    rev2Sub:'Su borrador está listo. Edite secciones antes de ejecutar proyecciones financieras y verificaciones de cumplimiento.',
+    rev2Badge:'Paso 2 de 2',
+    approve1:'Aprobar y continuar a la redacción del plan', approve2:'Aprobar y generar plan final',
+    loadTitle:'Construyendo su plan de negocio…',
+    loadSub:'Nuestros agentes de IA trabajan en cada sección. Esto tarda 60–90 segundos.',
+    revNote1:'Sus ediciones se incorporan literalmente — la IA no anula sus cambios.',
+    revNote2:'Las proyecciones financieras y verificaciones de cumplimiento se ejecutan después de este paso.',
+    sectionPlan:'Tipo de plan',
+    ptName1:'Solicitud de subvención', ptDesc1:'Propuesta completa para IDB, CDB y fondos gubernamentales',
+    ptName2:'Plan de préstamo bancario', ptDesc2:'Estructurado para banco comercial o cooperativa de crédito',
+    ptName3:'Plan simple',                  ptDesc3:'Narrativa concisa para pitches y competencias',
+    fsec1:'Detalles del negocio', fsec2:'Fundador y finanzas',
+    lbl_bname:'Nombre del negocio',   ph_bname:'ej. Eco Lodge Amanecer',
+    lbl_country:'País',               ph_country:'ej. Santo Domingo, Rep. Dominicana',
+    lbl_industry:'Sector',
+    lbl_customers:'Clientes objetivo', ph_customers:'¿Quién le comprará?',
+    lbl_idea:'¿Qué hace su negocio?', ph_idea:'Describa su producto o servicio principal en pocas frases...',
+    lbl_desc:'Descripción del negocio',   ph_desc:'Contexto adicional — historia, etapa, aspectos únicos...',
+    lbl_background:'Su trayectoria',       ph_background:'Experiencia relevante, calificaciones, años en el sector...',
+    lbl_funding:'Meta de financiamiento y expectativas', ph_funding:'ej. USD 50,000 para equipamiento y primeros 6 meses',
+    hbl1:'Programas de subvención', hbd1:'IDB, CDB, fondos gubernamentales y regionales',
+    hbl2:'Idiomas',                      hbd2:'ENG, NLD, SPA, POR, FRA',
+    hbl3:'Agentes de IA',                hbd3:'Pipeline especializado y colaborativo',
+    hbl4:'Tiempo de generación',    hbd4:'Por etapa, 5–10 min en total',
+    hbl5:'Pipeline',                     hbd5:'Ingreso → Investigación → Revisión → Redacción → Revisión → Finanzas → Cumplimiento',
+    pipeLabels:['Ingreso','Subvenciones','Mercado','Redacción','Finanzas','Cumplimiento','Listo'],
+    tabPlan:'Plan completo', tabGrants:'Subvenciones encontradas',
+    btnDlPdf:'Descargar PDF', btnDlTxt:'Descargar .txt', btnCopy:'Copiar', btnReset:'Generar otro plan',
+  },
+  por: {
+    eyebrow:'Plataforma de IA multi-agente',
+    h1Pre:'O seu plano de negócios, ', h1Em:'pronto para subsídios', h1Post:' em minutos',
+    heroSub:'Descubra oportunidades de financiamento no Caribe e gere um plano de negócios completo e em conformidade — no seu idioma, adaptado ao seu setor.',
+    ctaStart:'Começar seu plano', ctaBrowse:'Ver subsídios',
+    navPlan:'Gerador de planos', navGrants:'Explorar subsídios', navFaq:'FAQ',
+    genBtn:'Gerar plano de negócios',
+    rev1Title:'Revise a sua pesquisa de mercado',
+    rev1Sub:'Os agentes de pesquisa terminaram. Edite qualquer campo antes de escrevermos o seu plano — as suas alterações serão incorporadas.',
+    rev1Badge:'Passo 1 de 2',
+    rev2Title:'Revise o rascunho do seu plano',
+    rev2Sub:'O seu rascunho está pronto. Edite secções antes de executarmos projeções financeiras e verificações de conformidade.',
+    rev2Badge:'Passo 2 de 2',
+    approve1:'Aprovar e continuar para a redação do plano', approve2:'Aprovar e gerar plano final',
+    loadTitle:'A construir o seu plano de negócios…',
+    loadSub:'Os nossos agentes de IA trabalham em cada secção. Isto demora 60–90 segundos.',
+    revNote1:'As suas edições são incorporadas literalmente — a IA não substitui as suas alterações.',
+    revNote2:'Projeções financeiras e verificações de conformidade são executadas após este passo.',
+    sectionPlan:'Tipo de plano',
+    ptName1:'Candidatura a subsídio', ptDesc1:'Proposta completa para IDB, CDB e fundos governamentais',
+    ptName2:'Plano de empréstimo bancário', ptDesc2:'Estruturado para banco comercial ou cooperativa de crédito',
+    ptName3:'Plano simples',               ptDesc3:'Narrativa concisa para pitches e competições',
+    fsec1:'Detalhes do negócio', fsec2:'Fundador e finanças',
+    lbl_bname:'Nome do negócio',   ph_bname:'ex. Eco Lodge Amanhecer',
+    lbl_country:'País',                ph_country:'ex. Paramaribo, Suriname',
+    lbl_industry:'Setor',
+    lbl_customers:'Clientes-alvo',      ph_customers:'Quem vai comprar de si?',
+    lbl_idea:'O que faz o seu negócio?', ph_idea:'Descreva o seu produto ou serviço principal em poucas frases...',
+    lbl_desc:'Descrição do negócio',    ph_desc:'Contexto adicional — história, fase, aspetos únicos...',
+    lbl_background:'A sua experiência',  ph_background:'Experiência relevante, qualificações, anos no setor...',
+    lbl_funding:'Meta de financiamento e expectativas', ph_funding:'ex. USD 50.000 para equipamento e primeiros 6 meses',
+    hbl1:'Programas de subsídio', hbd1:'IDB, CDB, fundos governamentais e regionais',
+    hbl2:'Idiomas',                    hbd2:'ENG, NLD, SPA, POR, FRA',
+    hbl3:'Agentes de IA',              hbd3:'Pipeline especializado e colaborativo',
+    hbl4:'Tempo de geração', hbd4:'Por fase, 5–10 min no total',
+    hbl5:'Pipeline',                   hbd5:'Intake → Pesquisa → Revisão → Redação → Revisão → Finanças → Conformidade',
+    pipeLabels:['Intake','Subsídios','Mercado','Redação','Finanças','Conformidade','Concluído'],
+    tabPlan:'Plano completo', tabGrants:'Subsídios encontrados',
+    btnDlPdf:'Descarregar PDF', btnDlTxt:'Descarregar .txt', btnCopy:'Copiar', btnReset:'Gerar outro plano',
+  },
+  fra: {
+    eyebrow:'Plateforme IA multi-agents',
+    h1Pre:'Votre plan d’affaires, ', h1Em:'prêt pour les subventions', h1Post:' en quelques minutes',
+    heroSub:'Découvrez les opportunités de financement des Caraïbes et générez un plan d’affaires complet et conforme — dans votre langue, adapté à votre secteur.',
+    ctaStart:'Commencer votre plan', ctaBrowse:'Voir les subventions',
+    navPlan:'Générateur de plans', navGrants:'Explorer les subventions', navFaq:'FAQ',
+    genBtn:'Générer le plan d’affaires',
+    rev1Title:'Vérifiez votre étude de marché',
+    rev1Sub:'Les agents de recherche ont terminé. Modifiez tout champ avant que nous rédigions votre plan — vos modifications seront intégrées.',
+    rev1Badge:'Étape 1 sur 2',
+    rev2Title:'Vérifiez le brouillon de votre plan',
+    rev2Sub:'Votre brouillon est prêt. Modifiez des sections avant d’exécuter les projections financières et les vérifications de conformité.',
+    rev2Badge:'Étape 2 sur 2',
+    approve1:'Approuver et continuer à la rédaction du plan', approve2:'Approuver et générer le plan final',
+    loadTitle:'Construction de votre plan d’affaires…',
+    loadSub:'Nos agents IA travaillent sur chaque section. Cela prend 60–90 secondes.',
+    revNote1:'Vos modifications sont intégrées verbatim — l’IA ne remplace pas vos changements.',
+    revNote2:'Les projections financières et vérifications de conformité s’exécutent après cette étape.',
+    sectionPlan:'Type de plan',
+    ptName1:'Demande de subvention',      ptDesc1:'Proposition complète pour IDB, CDB et fonds gouvernementaux',
+    ptName2:'Plan de prêt bancaire',  ptDesc2:'Structuré pour banque commerciale ou coopérative de crédit',
+    ptName3:'Plan simple',                ptDesc3:'Narratif concis pour pitches et compétitions',
+    fsec1:'Détails de l’entreprise', fsec2:'Fondateur et finances',
+    lbl_bname:'Nom de l’entreprise',  ph_bname:'ex. Éco-lodge Soleil Levant',
+    lbl_country:'Pays',                   ph_country:'ex. Fort-de-France, Martinique',
+    lbl_industry:'Secteur',
+    lbl_customers:'Clients cibles',       ph_customers:'Qui achètera chez vous ?',
+    lbl_idea:'Que fait votre entreprise ?', ph_idea:'Décrivez votre produit ou service principal en quelques phrases...',
+    lbl_desc:'Description de l’entreprise', ph_desc:'Contexte supplémentaire — historique, stade, aspects uniques...',
+    lbl_background:'Votre parcours',      ph_background:'Expérience pertinente, qualifications, années dans le secteur...',
+    lbl_funding:'Objectif de financement et attentes', ph_funding:'ex. 50 000 USD pour équipement et 6 premiers mois',
+    hbl1:'Programmes de subvention', hbd1:'IDB, CDB, fonds gouvernementaux et régionaux',
+    hbl2:'Langues',                   hbd2:'ENG, NLD, SPA, POR, FRA',
+    hbl3:'Agents IA',                 hbd3:'Pipeline spécialisé et collaboratif',
+    hbl4:'Temps de génération', hbd4:'Par étape, 5–10 min au total',
+    hbl5:'Pipeline',                  hbd5:'Saisie → Recherche → Examen → Rédaction → Examen → Finances → Conformité',
+    pipeLabels:['Saisie','Subventions','Marché','Rédaction','Finances','Conformité','Terminé'],
+    tabPlan:'Plan complet', tabGrants:'Subventions trouvées',
+    btnDlPdf:'Télécharger PDF', btnDlTxt:'Télécharger .txt', btnCopy:'Copier', btnReset:'Générer un autre plan',
+  },
+};
+
+function applyUiStrings(langCode) {
+  const code = langCode.slice(0,3).toLowerCase();
+  const u = UI_STRINGS[code] || UI_STRINGS.eng;
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  const setHtml = (id, val) => { const el = document.getElementById(id); if(el) el.innerHTML = val; };
+  /* nav + hero */
+  set('heroEyebrow',   u.eyebrow);
+  set('heroH1Pre', u.h1Pre);
+  set('heroH1Em',  u.h1Em);
+  set('heroH1Post',u.h1Post);
+  set('heroSub',       u.heroSub);
+  set('ctaStartTxt',   u.ctaStart);
+  set('ctaBrowseTxt',  u.ctaBrowse);
+  set('navLinkPlan',   u.navPlan);
+  set('navLinkGrants', u.navGrants);
+  set('navLinkFaq',    u.navFaq);
+  /* hero stat grid */
+  set('hbl1', u.hbl1); set('hbd1', u.hbd1);
+  set('hbl2', u.hbl2); set('hbd2', u.hbd2);
+  set('hbl3', u.hbl3); set('hbd3', u.hbd3);
+  set('hbl4', u.hbl4); set('hbd4', u.hbd4);
+  set('hbl5', u.hbl5); set('hbd5', u.hbd5);
+  /* plan type selector */
+  set('sectionLabelPlan', u.sectionPlan);
+  set('ptName1', u.ptName1); set('ptDesc1', u.ptDesc1);
+  set('ptName2', u.ptName2); set('ptDesc2', u.ptDesc2);
+  set('ptName3', u.ptName3); set('ptDesc3', u.ptDesc3);
+  /* form section headers */
+  set('fsec1Title', u.fsec1);
+  set('fsec2Title', u.fsec2);
+  /* form labels */
+  const setLbl = (id, val, req) => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.innerHTML = val + (req ? ' <span class="req">*</span>' : '');
+  };
+  setLbl('lbl_bname',      u.lbl_bname,      true);
+  setLbl('lbl_country',    u.lbl_country,    true);
+  setLbl('lbl_industry',   u.lbl_industry,   true);
+  setLbl('lbl_customers',  u.lbl_customers,  true);
+  setLbl('lbl_idea',       u.lbl_idea,       true);
+  setLbl('lbl_desc',       u.lbl_desc,       false);
+  setLbl('lbl_background', u.lbl_background, false);
+  setLbl('lbl_funding',    u.lbl_funding,    true);
+  /* placeholders */
+  document.querySelectorAll('[data-ph]').forEach(el => {
+    const key = el.getAttribute('data-ph');
+    if(u[key]) el.placeholder = u[key];
+  });
+  /* loading */
+  set('loadingTitle', u.loadTitle);
+  set('loadingSub',   u.loadSub);
+  /* pipeline labels */
+  if(u.pipeLabels) {
+    const ids = ['intake','grants','market','writing','financial','compliance','done'];
+    ids.forEach((id,i) => set('lbl-'+id, u.pipeLabels[i]));
+  }
+  /* review panels */
+  set('rev1Title',      u.rev1Title);   set('rev1Sub',    u.rev1Sub);
+  set('rev1Badge',      u.rev1Badge);   set('revNote1',   u.revNote1);
+  set('approveBtn1Txt', u.approve1);
+  set('rev2Title',      u.rev2Title);   set('rev2Sub',    u.rev2Sub);
+  set('rev2Badge',      u.rev2Badge);   set('revNote2',   u.revNote2);
+  set('approveBtn2Txt', u.approve2);
+  /* result */
+  set('tabPlan',      u.tabPlan);
+  set('tabGrants',    u.tabGrants);
+  set('btnDlPdfTxt',  u.btnDlPdf);
+  set('btnDlTxtTxt',  u.btnDlTxt);
+  set('btnCopyTxt',   u.btnCopy);
+  set('btnResetTxt',  u.btnReset);
+  /* generate button */
+  set('genBtnTxt', u.genBtn);
+}
+
+function updateLang(langCode) {
+  const code = langCode.slice(0,3).toLowerCase();
+  document.getElementById('outputLang').value = langCode;
+  renderFaq(langCode);
+  applyUiStrings(langCode);
+  localStorage.setItem('gb_lang', langCode);
+}
+
+function onNavLangChange(langCode) {
+  updateLang(langCode);
+}
+
+/* ── Restore saved language on load ──────────────────────────────────────── */
+(function initLang(){
+  const saved = localStorage.getItem('gb_lang') || 'eng';
+  const sel = document.getElementById('navLang');
+  if(sel) sel.value = saved;
+  updateLang(saved);
+})();
+
+/* ── FAQ toggle ───────────────────────────────────────────────────────────── */
+function toggleFaq(btn){
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GrantBridge AI — Caribbean Business Funding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black:     #080c10;
+      --deep:      #0d1420;
+      --navy:      #0f2044;
+      --teal:      #00c48c;
+      --teal-dim:  #00a876;
+      --teal-glow: rgba(0,196,140,0.18);
+      --gold:      #f5a623;
+      --gold-dim:  rgba(245,166,35,0.15);
+      --white:     #ffffff;
+      --off:       #f0f4f8;
+      --text:      #1a2535;
+      --muted:     #5e7391;
+      --border:    rgba(255,255,255,0.08);
+      --card-bg:   rgba(255,255,255,0.03);
+      --radius:    16px;
+      --radius-sm: 10px;
+
+      /* semantic tokens — dark defaults */
+      --bg-page:        #080c10;
+      --bg-nav:         rgba(8,12,16,0.85);
+      --bg-card:        rgba(255,255,255,0.03);
+      --bg-input:       rgba(255,255,255,0.04);
+      --bg-hero:        transparent;
+      --color-text:     #ffffff;
+      --color-text-sub: rgba(255,255,255,0.5);
+      --color-text-hint:rgba(255,255,255,0.25);
+      --color-border:   rgba(255,255,255,0.08);
+      --color-border-focus: var(--teal);
+      --grid-line:      rgba(0,196,140,0.03);
+      --input-color:    #ffffff;
+      --select-opt-bg:  #0d1420;
+      --hero-glow-start:rgba(0,196,140,0.12);
+      --nav-link-color: rgba(255,255,255,0.55);
+      --error-bg:       rgba(239,68,68,0.08);
+      --error-border:   rgba(239,68,68,0.3);
+      --error-text:     #fca5a5;
+      --result-hdr-bg:  linear-gradient(135deg, rgba(0,196,140,0.12), rgba(0,196,140,0.04));
+      --tab-bg:         rgba(0,0,0,0.2);
+      --action-bar-bg:  rgba(0,0,0,0.2);
+      --loading-title:  #ffffff;
+      --plan-text:      rgba(255,255,255,0.75);
+      --grant-card-bg:  rgba(255,255,255,0.02);
+      --grant-card-hover-bg: rgba(0,196,140,0.03);
+      --score-badge-bg: rgba(0,196,140,0.12);
+    }
+
+    /* ── LIGHT MODE ── */
+    html.light {
+      --bg-page:        #f4f7f5;
+      --bg-nav:         rgba(255,255,255,0.92);
+      --bg-card:        #ffffff;
+      --bg-input:       #f8faf9;
+      --bg-hero:        transparent;
+      --color-text:     #0d1a12;
+      --color-text-sub: #4a6358;
+      --color-text-hint:#7a9488;
+      --color-border:   rgba(0,0,0,0.1);
+      --color-border-focus: var(--teal);
+      --grid-line:      rgba(0,196,140,0.06);
+      --input-color:    #0d1a12;
+      --select-opt-bg:  #ffffff;
+      --hero-glow-start:rgba(0,196,140,0.08);
+      --nav-link-color: #4a6358;
+      --error-bg:       #fff5f5;
+      --error-border:   rgba(239,68,68,0.3);
+      --error-text:     #b91c1c;
+      --result-hdr-bg:  linear-gradient(135deg, rgba(0,196,140,0.1), rgba(0,196,140,0.03));
+      --tab-bg:         #f0f5f2;
+      --action-bar-bg:  #f0f5f2;
+      --loading-title:  #0d1a12;
+      --plan-text:      #1a3028;
+      --grant-card-bg:  #f8faf9;
+      --grant-card-hover-bg: rgba(0,196,140,0.04);
+      --score-badge-bg: rgba(0,196,140,0.1);
+    }
+
+    /* ── THEME TOGGLE BUTTON ── */
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      background: var(--bg-card);
+      color: var(--color-text);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      transition: background .2s, border-color .2s, transform .15s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--teal); transform: rotate(15deg); }
+
+    /* ── LIGHT MODE OVERRIDES ── */
+    html.light body { background: var(--bg-page); color: var(--color-text); }
+    html.light .nav-logo-text { color: var(--color-text); }
+    html.light .hero h1 { color: var(--color-text); }
+    html.light .hero-sub { color: var(--color-text-sub); }
+    html.light .hero-stat-num { color: var(--teal-dim); }
+    html.light .hero-stat-label { color: var(--color-text-hint); }
+    html.light .hero-step { background: rgba(0,196,140,0.08); border-color: rgba(0,196,140,0.2); color: var(--color-text-sub); }
+    html.light .section-label { color: var(--color-text-hint); }
+    html.light .plan-type-card { background: #ffffff; border-color: rgba(0,0,0,0.1); }
+    html.light .plan-type-card:hover { border-color: var(--teal); }
+    html.light .plan-type-name { color: var(--color-text); }
+    html.light .plan-type-desc { color: var(--color-text-sub); }
+    html.light .form-card { background: #ffffff; border-color: rgba(0,0,0,0.1); }
+    html.light .form-card-header { border-bottom-color: rgba(0,0,0,0.08); }
+    html.light .form-card-header h2 { color: var(--color-text); }
+    html.light .form-card-header p { color: var(--color-text-sub); }
+    html.light .form-section { border-bottom-color: rgba(0,0,0,0.08); }
+    html.light .form-section-title { color: var(--teal-dim); }
+    html.light .field-hint { color: var(--color-text-sub); }
+    html.light label { color: var(--color-text); }
+    html.light input, html.light textarea, html.light select { background: var(--bg-input); border-color: rgba(0,0,0,0.12); color: var(--input-color); }
+    html.light input::placeholder, html.light textarea::placeholder { color: rgba(0,0,0,0.25); }
+    html.light select option { background: #fff; color: #0d1a12; }
+    html.light .loading-card { background: #ffffff; border-color: rgba(0,0,0,0.1); }
+    html.light .loading-title { color: var(--loading-title); }
+    html.light .loading-subtitle { color: var(--color-text-sub); }
+    html.light .pipeline-step { color: var(--color-text-hint); }
+    html.light .pipeline-step.active { background: rgba(0,196,140,0.08); border-color: rgba(0,196,140,0.2); color: var(--teal-dim); }
+    html.light .pipeline-step.done { color: var(--teal-dim); }
+    html.light .result-card { background: #ffffff; border-color: rgba(0,0,0,0.1); }
+    html.light .result-header { background: var(--result-hdr-bg); border-bottom-color: rgba(0,0,0,0.08); }
+    html.light .result-header h2 { color: var(--color-text); }
+    html.light .result-header p { color: var(--color-text-sub); }
+    html.light .tabs { background: var(--tab-bg); border-bottom-color: rgba(0,0,0,0.08); }
+    html.light .tab-btn { color: var(--color-text-sub); }
+    html.light .tab-btn.active { color: var(--teal-dim); border-bottom-color: var(--teal-dim); }
+    html.light .tab-content { background: #ffffff; }
+    html.light .plan-output { color: var(--plan-text); }
+    html.light .grant-card { background: var(--grant-card-bg); border-color: rgba(0,0,0,0.08); }
+    html.light .grant-card:hover { background: var(--grant-card-hover-bg); border-color: var(--teal); }
+    html.light .grant-name { color: var(--color-text); }
+    html.light .grant-provider { color: var(--color-text-hint); }
+    html.light .criteria-tag { background: #f0f5f2; border-color: rgba(0,0,0,0.1); color: var(--color-text-sub); }
+    html.light .action-bar { background: var(--action-bar-bg); border-top-color: rgba(0,0,0,0.08); }
+    html.light .btn-action { background: #ffffff; border-color: rgba(0,0,0,0.12); color: var(--color-text-sub); }
+    html.light .btn-action:hover { background: #f0f5f2; color: var(--color-text); }
+    html.light .score-badge { background: var(--score-badge-bg); border-color: rgba(0,196,140,0.3); }
+    html.light .error-box { background: var(--error-bg); border-color: var(--error-border); color: var(--error-text); }
+    html.light footer { color: var(--color-text-hint); border-top-color: rgba(0,0,0,0.08); }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg-page);
+      color: var(--color-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background .3s, color .3s;
+    }
+
+    /* ── GRID TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: var(--bg-nav);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+      transition: background .3s, border-color .3s;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-mark {
+      width: 32px; height: 32px;
+      background: var(--teal);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--black);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo-text span { color: var(--teal); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-link {
+      font-size: 13px;
+      color: var(--nav-link-color);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      transition: color .2s, background .2s;
+      font-weight: 400;
+    }
+    .nav-link:hover { color: var(--color-text); background: rgba(0,196,140,0.08); }
+    .nav-link.active { color: var(--teal); }
+
+    .nav-lang select {
+      background: var(--bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--nav-link-color);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      outline: none;
+    }
+    .nav-lang select option { background: var(--select-opt-bg); color: var(--color-text); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 100px 48px 90px;
+      text-align: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 500px;
+      background: radial-gradient(ellipse, rgba(0,196,140,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal-glow);
+      border: 1px solid rgba(0,196,140,0.3);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 32px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(38px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 24px;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 .accent { color: var(--teal); }
+    .hero h1 .gold   { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.5);
+      max-width: 520px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 56px;
+    }
+    .hero-stat {
+      padding: 0 36px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--teal);
+      letter-spacing: -0.02em;
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+
+    /* ── PLAN TYPE ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 16px;
+    }
+
+    .plan-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .plan-type-card {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 18px;
+      cursor: pointer;
+      transition: all .2s;
+      background: var(--card-bg);
+      text-align: left;
+      overflow: hidden;
+    }
+    .plan-type-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--teal-glow), transparent);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .plan-type-card:hover::before,
+    .plan-type-card.selected::before { opacity: 1; }
+    .plan-type-card.selected {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 1px var(--teal), 0 8px 32px rgba(0,196,140,0.15);
+    }
+    .plan-type-card input[type=radio] { display: none; }
+    .plan-type-check {
+      position: absolute; top: 12px; right: 12px;
+      width: 20px; height: 20px;
+      background: var(--teal);
+      border-radius: 50%;
+      color: var(--black);
+      font-size: 10px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    .plan-type-card.selected .plan-type-check { display: flex; }
+    .plan-type-icon { font-size: 24px; margin-bottom: 10px; }
+    .plan-type-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .plan-type-card.selected .plan-type-name { color: var(--teal); }
+    .plan-type-desc { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+
+    /* ── FORM SECTION ── */
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--color-border);
+      border-top: 3px solid var(--teal);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .form-card-header {
+      padding: 28px 40px 24px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .form-card-icon {
+      width: 36px; height: 36px;
+      color: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .form-card-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .form-card-header p {
+      font-size: 13px;
+      color: var(--color-text-sub);
+      line-height: 1.5;
+    }
+    .form-card-body { padding: 36px 40px; }
+
+    /* Form sections with dividers — government portal style */
+    .form-section {
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .form-section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .form-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 28px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .field-hint {
+      font-size: 11px;
+      color: var(--color-text-sub);
+      margin-top: -2px;
+      margin-bottom: 2px;
+    }
+    label .req { color: var(--teal); margin-left: 2px; font-weight: 400; }
+
+    input, textarea, select {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--input-color);
+      background: var(--bg-input);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      padding: 10px 14px;
+      transition: border-color .15s, box-shadow .15s;
+      outline: none;
+      resize: vertical;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0,196,140,0.1);
+    }
+    select option { background: var(--select-opt-bg); color: var(--input-color); }
+    textarea { min-height: 90px; line-height: 1.6; }
+    ::placeholder { color: var(--color-text-hint); font-style: italic; }
+
+    /* ── GENERATE BUTTON ── */
+    .btn-generate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 40px;
+      background: var(--teal);
+      color: #061209;
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 28px;
+      transition: background .15s, box-shadow .15s;
+    }
+    .btn-generate:hover:not(:disabled) {
+      background: #00dea0;
+      box-shadow: 0 2px 12px rgba(0,196,140,0.3);
+    }
+    .btn-generate:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* ── HUMAN-IN-THE-LOOP REVIEW PANELS ── */
+    .review-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--color-border);
+      border-top: 3px solid var(--gold);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      animation: fadeUp .4s ease;
+    }
+    .review-panel.visible { display: block; }
+    .review-header {
+      padding: 28px 40px 24px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .review-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .review-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    .review-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .review-subtitle {
+      font-size: 13px;
+      color: var(--color-text-sub);
+      line-height: 1.6;
+      max-width: 560px;
+    }
+    .review-body {
+      padding: 28px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-height: 520px;
+      overflow-y: auto;
+    }
+    .review-section { display: flex; flex-direction: column; gap: 6px; }
+    .review-section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .review-field {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--input-color);
+      background: var(--bg-input);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      padding: 10px 14px;
+      resize: vertical;
+      line-height: 1.6;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .review-field:focus { border-color: var(--teal); }
+    .review-grants {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .review-grant-tag {
+      background: rgba(0,196,140,0.08);
+      border: 1px solid rgba(0,196,140,0.25);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 3px;
+    }
+    .review-footer {
+      padding: 20px 40px 28px;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .review-note {
+      font-size: 12px;
+      color: var(--color-text-hint);
+      max-width: 400px;
+      line-height: 1.5;
+    }
+    .btn-review-approve {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: var(--teal);
+      color: #061209;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .btn-review-approve:hover { background: #00dea0; }
+    .btn-review-approve:disabled { opacity: 0.6; cursor: not-allowed; }
+    html.light .review-field { background: var(--bg-input); border-color: rgba(0,0,0,0.12); color: var(--input-color); }
+    html.light .review-title { color: var(--color-text); }
+    html.light .review-subtitle { color: var(--color-text-sub); }
+    .loading-card {
+      display: none;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 56px 32px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .loading-card.visible { display: block; }
+
+    .spinner-ring {
+      width: 52px; height: 52px;
+      border: 3px solid rgba(0,196,140,0.15);
+      border-top-color: var(--teal);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 28px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .loading-subtitle { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 36px; }
+
+    .pipeline-steps { display: flex; flex-direction: column; gap: 8px; max-width: 360px; margin: 0 auto; }
+    .pipeline-step {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+      transition: all .4s;
+      border: 1px solid transparent;
+    }
+    .pipeline-step.active {
+      background: rgba(0,196,140,0.08);
+      border-color: rgba(0,196,140,0.2);
+      color: var(--teal);
+      font-weight: 500;
+    }
+    .pipeline-step.done { color: rgba(0,196,140,0.6); }
+    .step-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      flex-shrink: 0;
+      transition: background .4s;
+    }
+    .pipeline-step.active .step-dot { background: var(--teal); animation: pulse 1s infinite; }
+    .pipeline-step.done .step-dot { background: rgba(0,196,140,0.5); }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.75)} }
+
+    /* ── RESULT ── */
+    .result-card {
+      display: none;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 24px;
+      animation: fadeUp .5s ease;
+    }
+    .result-card.visible { display: block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    .result-header {
+      padding: 28px 32px;
+      background: linear-gradient(135deg, rgba(0,196,140,0.12), rgba(0,196,140,0.04));
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .result-header h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .result-header p { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+    .score-badge {
+      background: rgba(0,196,140,0.12);
+      border: 1px solid rgba(0,196,140,0.3);
+      color: var(--teal);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+    .score-dot { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.2);
+      overflow-x: auto;
+    }
+    .tab-btn {
+      padding: 14px 24px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color .2s, border-color .2s;
+    }
+    .tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    .tab-content { display: none; padding: 32px; }
+    .tab-content.active { display: block; animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    .plan-output {
+      font-size: 14px;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.75);
+      white-space: pre-wrap;
+      font-family: 'Source Sans 3', sans-serif;
+      max-height: 520px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .plan-output::-webkit-scrollbar { width: 4px; }
+    .plan-output::-webkit-scrollbar-track { background: transparent; }
+    .plan-output::-webkit-scrollbar-thumb { background: rgba(0,196,140,0.3); border-radius: 2px; }
+
+    .grants-grid { display: flex; flex-direction: column; gap: 14px; }
+    .grant-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      transition: border-color .2s, background .2s;
+      background: rgba(255,255,255,0.02);
+    }
+    .grant-card:hover { border-color: rgba(0,196,140,0.3); background: rgba(0,196,140,0.03); }
+    .grant-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .grant-name { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--white); }
+    .grant-provider { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .grant-amount {
+      background: rgba(0,196,140,0.1);
+      border: 1px solid rgba(0,196,140,0.2);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+    .match-bar-bg { flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .match-bar-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); border-radius: 2px; transition: width 1s ease; }
+    .match-pct { font-size: 12px; font-weight: 600; color: var(--teal); font-family: 'Inter', sans-serif; }
+    .grant-match { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .criteria-tag {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: rgba(255,255,255,0.4);
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .grant-criteria { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+    .action-bar {
+      display: flex;
+      gap: 10px;
+      padding: 20px 32px;
+      background: rgba(0,0,0,0.2);
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.7);
+    }
+    .btn-action:hover { border-color: rgba(255,255,255,0.2); color: var(--white); background: rgba(255,255,255,0.07); }
+    .btn-action.primary { background: var(--teal); color: var(--black); border-color: var(--teal); font-weight: 600; }
+    .btn-action.primary:hover { background: #00dea0; border-color: #00dea0; }
+
+    .error-box {
+      display: none;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      color: #fca5a5;
+      font-size: 13px;
+    }
+    .error-box.visible { display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 32px;
+      color: rgba(255,255,255,0.2);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+    footer strong { color: var(--teal); }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .hero { padding: 64px 20px 56px; }
+      .hero-stats { flex-wrap: wrap; gap: 24px; }
+      .hero-stat { border-right: none; padding: 0 16px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .plan-type-grid { grid-template-columns: 1fr; }
+      .form-card-body, .tab-content { padding: 20px; }
+      .action-bar { padding: 16px 20px; }
+      main { padding: 0 16px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/ui/index.html" class="nav-logo">
+    <div class="nav-logo-mark">GB</div>
+    <div class="nav-logo-text">Grant<span>Bridge</span> AI</div>
+  </a>
+  <div class="nav-right">
+    <a href="/ui/grants.html" class="nav-link">Browse Grants</a>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+      <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <div class="nav-lang">
+      <select id="globalLang" onchange="switchLanguage(this.value)">
+        <option value="en">🇬🇧 English</option>
+        <option value="nl">🇳🇱 Nederlands</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="pt">🇧🇷 Português</option>
+        <option value="fr">🇫🇷 Français</option>
+      </select>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">
+    <div class="hero-badge-dot"></div>
+    <span data-i18n="eyebrow">For Caribbean Entrepreneurs</span>
+  </div>
+  <h1>
+    <span data-i18n="hero_title">AI That Helps You</span><br/>
+    <span class="accent" data-i18n="hero_title_em">Discover Grants &amp; Funding</span><br/>
+    <span data-i18n="hero_title_3">in Minutes</span>
+  </h1>
+  <p class="hero-sub" data-i18n="hero_sub">
+    GrantBridge AI builds grant-ready business plans for Caribbean entrepreneurs — tailored to CDB, IDB, and government funds across CARICOM.
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">15+</div>
+      <div class="hero-stat-label" data-i18n="stat1">CARICOM Countries</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">5</div>
+      <div class="hero-stat-label" data-i18n="stat2">Languages</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label" data-i18n="stat3">Plan Types</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">&lt;2m</div>
+      <div class="hero-stat-label" data-i18n="stat4">Plan Generation</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- Plan Type -->
+  <div style="margin-bottom:32px">
+    <p class="section-label" data-i18n="plan_type_label">Choose your plan type</p>
+    <div class="plan-type-grid">
+      <label class="plan-type-card selected" onclick="selectPlanType('grant',this)">
+        <input type="radio" name="plan_type" value="grant" checked/>
+        <div class="plan-type-check">✓</div>
+        <div class="plan-type-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8 14l-2 7 6-3 6 3-2-7"/></svg></div>
+        <div class="plan-type-name" data-i18n="pt_grant_name">Grant Application</div>
+        <div class="plan-type-desc" data-i18n="pt_grant_desc">CDB, IDB, government funds — compliance-ready</div>
+      </label>
+      <label class="plan-type-card" onclick="selectPlanType('bank',this)">
+        <input type="radio" name="plan_type" value="bank"/>
+        <div class="plan-type-check">✓</div>
+        <div class="plan-type-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M3 9l9-6 9 6"/><line x1="12" y1="9" x2="12" y2="21"/><line x1="7" y1="9" x2="7" y2="21"/><line x1="17" y1="9" x2="17" y2="21"/></svg></div>
+        <div class="plan-type-name" data-i18n="pt_bank_name">Bank Loan</div>
+        <div class="plan-type-desc" data-i18n="pt_bank_desc">Local bank application — collateral &amp; repayment focused</div>
+      </label>
+      <label class="plan-type-card" onclick="selectPlanType('simple',this)">
+        <input type="radio" name="plan_type" value="simple"/>
+        <div class="plan-type-check">✓</div>
+        <div class="plan-type-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+        <div class="plan-type-name" data-i18n="pt_simple_name">Simple Plan</div>
+        <div class="plan-type-desc" data-i18n="pt_simple_desc">Personal use, early-stage ideas, plain language</div>
+      </label>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="form-card" id="formCard">
+    <div class="form-card-header">
+      <div class="form-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+      <div>
+        <h2 data-i18n="form_title">Business Plan Application</h2>
+        <p data-i18n="form_sub">Complete all required fields. The more detail you provide, the more accurate your plan will be.</p>
+      </div>
+    </div>
+    <div class="form-card-body">
+
+      <!-- Section 1: Business Identity -->
+      <div class="form-section">
+        <div class="form-section-title">Section 1 — Business Identity</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label><span data-i18n="lbl_biz_name">Business Name</span> <span class="req">*</span></label>
+            <input type="text" id="business_name" data-i18n-placeholder="ph_biz_name" placeholder="e.g. AgroTech Caribbean" />
+          </div>
+          <div class="form-group">
+            <label><span data-i18n="lbl_industry">Industry Sector</span> <span class="req">*</span></label>
+            <select id="industry">
+              <option value="" data-i18n="ind_select">— Select industry —</option>
+              <option value="agritech"      data-i18n="ind_agri">Agritech / Agriculture</option>
+              <option value="fintech"       data-i18n="ind_fin">Fintech / Finance</option>
+              <option value="tourism"       data-i18n="ind_tour">Tourism / Hospitality</option>
+              <option value="technology"    data-i18n="ind_tech">Technology / Software</option>
+              <option value="manufacturing" data-i18n="ind_mfg">Manufacturing</option>
+              <option value="retail"        data-i18n="ind_retail">Retail / E-commerce</option>
+              <option value="health"        data-i18n="ind_health">Healthcare / Wellness</option>
+              <option value="education"     data-i18n="ind_edu">Education / Training</option>
+              <option value="environment"   data-i18n="ind_env">Environment / Climate</option>
+              <option value="food"          data-i18n="ind_food">Food &amp; Beverage</option>
+              <option value="logistics"     data-i18n="ind_log">Logistics / Transport</option>
+              <option value="creative"      data-i18n="ind_cre">Creative Industries</option>
+              <option value="other"         data-i18n="ind_other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><span data-i18n="lbl_location">Country / City</span> <span class="req">*</span></label>
+            <input type="text" id="location" placeholder="e.g. Paramaribo, Suriname" value="Paramaribo, Suriname" />
+          </div>
+          <div class="form-group">
+            <label><span data-i18n="lbl_output_lang">Plan Output Language</span> <span class="req">*</span></label>
+            <select id="outputLang">
+              <option value="English">English</option>
+              <option value="Dutch">Dutch (Nederlands)</option>
+              <option value="Spanish">Spanish (Español)</option>
+              <option value="Portuguese">Portuguese (Português)</option>
+              <option value="French">French (Français)</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label><span data-i18n="lbl_idea">Business Description</span> <span class="req">*</span></label>
+            <div class="field-hint">Describe what your business does, the problem it solves, and what makes it different.</div>
+            <textarea id="startup_idea" data-i18n-placeholder="ph_idea" placeholder="Describe your business idea. What problem does it solve? What makes it unique?"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Market & Customers -->
+      <div class="form-section">
+        <div class="form-section-title">Section 2 — Market &amp; Customers</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label><span data-i18n="lbl_customers">Target Customers</span> <span class="req">*</span></label>
+            <div class="field-hint">Who will buy your product or service? Include age range, location, and estimated market size if known.</div>
+            <textarea id="target_customers" data-i18n-placeholder="ph_customers" placeholder="Who are your customers? Age, location, needs, how many." style="min-height:80px"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Financials -->
+      <div class="form-section">
+        <div class="form-section-title">Section 3 — Financial Information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label><span data-i18n="lbl_financial">Funding Required</span> <span class="req">*</span></label>
+            <div class="field-hint">State the amount and purpose of the funding you are seeking.</div>
+            <input type="text" id="financial_expectations" data-i18n-placeholder="ph_financial" placeholder="e.g. Seeking USD 50,000 in grant funding" />
+          </div>
+          <div class="form-group" id="bank-extra" style="display:none">
+            <label><span data-i18n="lbl_loan">Loan Amount &amp; Term</span></label>
+            <div class="field-hint">Specify the loan amount and repayment period requested.</div>
+            <input type="text" id="loan_amount" data-i18n-placeholder="ph_loan" placeholder="e.g. USD 30,000 over 5 years" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Applicant Background -->
+      <div class="form-section">
+        <div class="form-section-title">Section 4 — Applicant Background <span style="font-weight:400;color:var(--color-text-sub);text-transform:none;letter-spacing:0;font-size:11px">(optional)</span></div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label><span data-i18n="lbl_background">Founder / Applicant Profile</span></label>
+            <div class="field-hint">Briefly describe your relevant experience, qualifications, or skills.</div>
+            <textarea id="founder_background" data-i18n-placeholder="ph_background" placeholder="Your experience and skills relevant to this business." style="min-height:80px"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-generate" id="generateBtn" onclick="generatePlan()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span id="btnText" data-i18n="btn_generate">Generate Business Plan</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-card" id="loadingCard">
+
+  <!-- HITL Review Panel 1 — Market Research Review -->
+  <div class="review-panel" id="reviewPanel1">
+    <div class="review-header">
+      <div class="review-badge">Review Required</div>
+      <h2 class="review-title">Step 1 of 2 — Review Market Research</h2>
+      <p class="review-subtitle">Our agents have completed their research. Review the findings below and make any corrections before we write your plan.</p>
+    </div>
+    <div class="review-body">
+      <div class="review-section">
+        <div class="review-section-label">Market Size & Opportunity</div>
+        <textarea class="review-field" id="r1_market_size" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Competitor Overview</div>
+        <textarea class="review-field" id="r1_competitors" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Target Customer Analysis</div>
+        <textarea class="review-field" id="r1_customers" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Matched Grants</div>
+        <div class="review-grants" id="r1_grants"></div>
+      </div>
+    </div>
+    <div class="review-footer">
+      <p class="review-note">You can edit any field above. Changes will be incorporated into your plan.</p>
+      <button class="btn-review-approve" onclick="approveCheckpoint1()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Approve &amp; Continue to Plan Writing
+      </button>
+    </div>
+  </div>
+
+  <!-- HITL Review Panel 2 — Plan Draft Review -->
+  <div class="review-panel" id="reviewPanel2">
+    <div class="review-header">
+      <div class="review-badge">Review Required</div>
+      <h2 class="review-title">Step 2 of 2 — Review Plan Draft</h2>
+      <p class="review-subtitle">Your plan draft is ready. Edit any section before we run financial projections and compliance checks.</p>
+    </div>
+    <div class="review-body">
+      <div class="review-section">
+        <div class="review-section-label">Executive Summary</div>
+        <textarea class="review-field" id="r2_executive_summary" rows="4"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Problem Statement</div>
+        <textarea class="review-field" id="r2_problem_statement" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Solution</div>
+        <textarea class="review-field" id="r2_solution" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Market Opportunity</div>
+        <textarea class="review-field" id="r2_market_opportunity" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Business Model</div>
+        <textarea class="review-field" id="r2_business_model" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Marketing Strategy</div>
+        <textarea class="review-field" id="r2_marketing_strategy" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Operations Plan</div>
+        <textarea class="review-field" id="r2_operations_plan" rows="3"></textarea>
+      </div>
+      <div class="review-section">
+        <div class="review-section-label">Funding Request</div>
+        <textarea class="review-field" id="r2_funding_request" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="review-footer">
+      <p class="review-note">Edited sections will be used in the final plan. Financial projections and compliance checks run next.</p>
+      <button class="btn-review-approve" onclick="approveCheckpoint2()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Approve &amp; Generate Final Plan
+      </button>
+    </div>
+  </div>
+    <div class="spinner-ring"></div>
+    <div class="loading-title" data-i18n="loading_title">Building Your Business Plan…</div>
+    <div class="loading-subtitle" data-i18n="loading_sub">Our AI agents are working through each section. This takes 60–90 seconds.</div>
+    <div class="pipeline-steps">
+      <div class="pipeline-step active" id="step-intake"><div class="step-dot"></div><span data-i18n="ps_intake">Intake Agent — validating your inputs</span></div>
+      <div class="pipeline-step" id="step-grants"><div class="step-dot"></div><span data-i18n="ps_grants">Grant Research Agent — finding matching funds</span></div>
+      <div class="pipeline-step" id="step-market"><div class="step-dot"></div><span data-i18n="ps_market">Market Research Agent — analysing your market</span></div>
+      <div class="pipeline-step" id="step-writing"><div class="step-dot"></div><span data-i18n="ps_writing">Plan Writer Agent — writing all sections</span></div>
+      <div class="pipeline-step" id="step-financial"><div class="step-dot"></div><span data-i18n="ps_financial">Financial Agent — building projections</span></div>
+      <div class="pipeline-step" id="step-compliance"><div class="step-dot"></div><span data-i18n="ps_compliance">Compliance Agent — checking grant criteria</span></div>
+      <div class="pipeline-step" id="step-assembly"><div class="step-dot"></div><span data-i18n="ps_assembly">Assembling your final plan</span></div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <div>
+        <h2 id="resultTitle">Your Business Plan is Ready</h2>
+        <p id="resultMeta"></p>
+      </div>
+      <div class="score-badge"><div class="score-dot"></div><span id="scoreText">Compliance: —</span></div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('plan',this)" data-i18n="tab_plan">Full Plan</button>
+      <button class="tab-btn" onclick="showTab('grants',this)" data-i18n="tab_grants">Matched Grants</button>
+    </div>
+    <div class="tab-content active" id="tab-plan">
+      <div class="plan-output" id="planOutput"></div>
+    </div>
+    <div class="tab-content" id="tab-grants">
+      <div class="grants-grid" id="grantsGrid"></div>
+    </div>
+    <div class="action-bar">
+      <button class="btn-action primary" onclick="downloadPlan()" data-i18n="btn_download">Download Plan (.txt)</button>
+      <button class="btn-action" onclick="copyPlan()" id="copyBtn" data-i18n="btn_copy">Copy to Clipboard</button>
+      <button class="btn-action" onclick="resetForm()" data-i18n="btn_reset">Generate Another Plan</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span data-i18n="footer_text">Built for <strong>Caribbean &amp; CARICOM</strong> entrepreneurs · Powered by GrantBridge AI</span>
+</footer>
+
+<script>
+const API_BASE = window.location.origin;
+let generatedPlan = '';
+let businessName  = '';
+let currentLang   = 'en';
+
+const T = {
+  en: {
+    eyebrow:'For Caribbean Entrepreneurs',
+    hero_title:'AI That Helps You', hero_title_em:'Discover Grants & Funding', hero_title_3:'in Minutes',
+    hero_sub:'GrantBridge AI builds grant-ready business plans for Caribbean entrepreneurs — tailored to CDB, IDB, and government funds across CARICOM.',
+    stat1:'CARICOM Countries', stat2:'Languages', stat3:'Plan Types', stat4:'Plan Generation',
+    plan_type_label:'Choose your plan type',
+    pt_grant_name:'Grant Application', pt_grant_desc:'CDB, IDB, government funds — compliance-ready',
+    pt_bank_name:'Bank Loan', pt_bank_desc:'Local bank application — collateral & repayment focused',
+    pt_simple_name:'Simple Plan', pt_simple_desc:'Personal use, early-stage ideas, plain language',
+    form_title:'Tell Us About Your Business', form_sub:'Fill in the details — the more you share, the better your plan',
+    lbl_biz_name:'Business Name', ph_biz_name:'e.g. AgroTech Caribbean',
+    lbl_industry:'Industry',
+    ind_select:'— Select industry —', ind_agri:'Agritech / Agriculture', ind_fin:'Fintech / Finance',
+    ind_tour:'Tourism / Hospitality', ind_tech:'Technology / Software', ind_mfg:'Manufacturing',
+    ind_retail:'Retail / E-commerce', ind_health:'Healthcare / Wellness', ind_edu:'Education / Training',
+    ind_env:'Environment / Climate', ind_food:'Food & Beverage', ind_log:'Logistics / Transport',
+    ind_cre:'Creative Industries', ind_other:'Other',
+    lbl_idea:'Business Idea', ph_idea:'Describe your business idea. What problem does it solve? What makes it unique?',
+    lbl_location:'Location', lbl_financial:'Financial Expectations',
+    ph_financial_grant:'e.g. Seeking USD 50,000 in grant funding',
+    ph_financial_bank:'e.g. Need USD 30,000 loan for equipment',
+    ph_financial_simple:'e.g. Starting with SRD 20,000 in savings',
+    lbl_customers:'Target Customers', ph_customers:'Who are your customers? Age, location, needs, how many.',
+    lbl_background:'Your Background', ph_background:'Your experience and skills relevant to this business.',
+    optional:'(optional)', lbl_loan:'Loan Amount Requested', ph_loan:'e.g. USD 30,000 over 5 years',
+    lbl_output_lang:'Plan Output Language',
+    btn_generate:'Generate My Business Plan',
+    loading_title:'Building Your Business Plan…',
+    loading_sub:'Our AI agents are working through each section. This takes 60–90 seconds.',
+    ps_intake:'Intake Agent — validating your inputs',
+    ps_grants:'Grant Research Agent — finding matching funds',
+    ps_market:'Market Research Agent — analysing your market',
+    ps_writing:'Plan Writer Agent — writing all sections',
+    ps_financial:'Financial Agent — building projections',
+    ps_compliance:'Compliance Agent — checking grant criteria',
+    ps_assembly:'Assembling your final plan',
+    tab_plan:'📄 Full Plan', tab_grants:'💰 Matched Grants',
+    btn_download:'⬇ Download Plan (.txt)', btn_copy:'📋 Copy to Clipboard', btn_reset:'🔄 Generate Another Plan',
+    copied:'✅ Copied!', score_label:'Compliance', plan_ready:'Plan Ready',
+    err_required:'Please fill in all required fields (marked with *).',
+    err_connect:'Error connecting to the API server. Make sure it is running at',
+    footer_text:'Built for Caribbean & CARICOM entrepreneurs · Powered by GrantBridge AI',
+    pt_labels:{grant:'Grant Application',bank:'Bank Loan',simple:'Simple Plan'},
+    generated_in:'Generated in', seconds:'s', revision:'revision cycle', revisions:'revision cycles', completed:'completed',
+  },
+  nl: {
+    eyebrow:'Voor Caribische Ondernemers',
+    hero_title:'AI Die U Helpt', hero_title_em:'Subsidies & Financiering te Ontdekken', hero_title_3:'in Minuten',
+    hero_sub:'GrantBridge AI maakt subsidie-klare businessplannen voor Caribische ondernemers — afgestemd op CDB, IDB en overheidsfondsen in CARICOM.',
+    stat1:'CARICOM Landen', stat2:'Talen', stat3:'Plan Types', stat4:'Plan Generatie',
+    plan_type_label:'Kies uw plantype',
+    pt_grant_name:'Subsidieaanvraag', pt_grant_desc:'CDB, IDB, overheidsfondsen — compliance-klaar',
+    pt_bank_name:'Banklening', pt_bank_desc:'Lokale bankaanvraag — zekerheden & terugbetaling',
+    pt_simple_name:'Eenvoudig Plan', pt_simple_desc:'Persoonlijk gebruik, vroeg stadium, eenvoudige taal',
+    form_title:'Vertel Ons Over Uw Bedrijf', form_sub:'Vul de details in — hoe meer u deelt, hoe beter uw plan',
+    lbl_biz_name:'Bedrijfsnaam', ph_biz_name:'bijv. AgroTech Caribbean',
+    lbl_industry:'Sector',
+    ind_select:'— Selecteer sector —', ind_agri:'Agritech / Landbouw', ind_fin:'Fintech / Financiën',
+    ind_tour:'Toerisme / Horeca', ind_tech:'Technologie / Software', ind_mfg:'Productie',
+    ind_retail:'Detailhandel / E-commerce', ind_health:'Gezondheidszorg', ind_edu:'Onderwijs / Training',
+    ind_env:'Milieu / Klimaat', ind_food:'Voeding & Dranken', ind_log:'Logistiek / Transport',
+    ind_cre:'Creatieve Industrie', ind_other:'Anders',
+    lbl_idea:'Bedrijfsidee', ph_idea:'Beschrijf uw bedrijfsidee. Welk probleem lost het op?',
+    lbl_location:'Locatie', lbl_financial:'Financiële Verwachtingen',
+    ph_financial_grant:'bijv. Zoek USD 50.000 aan subsidie',
+    ph_financial_bank:'bijv. USD 30.000 lening voor apparatuur',
+    ph_financial_simple:'bijv. Start met SRD 20.000 spaargeld',
+    lbl_customers:'Doelgroep', ph_customers:'Wie zijn uw klanten? Leeftijd, locatie, behoeften.',
+    lbl_background:'Uw Achtergrond', ph_background:'Uw relevante ervaring en vaardigheden.',
+    optional:'(optioneel)', lbl_loan:'Gevraagd Leningbedrag', ph_loan:'bijv. USD 30.000 over 5 jaar',
+    lbl_output_lang:'Taal van het Plan',
+    btn_generate:'Genereer Mijn Businessplan',
+    loading_title:'Uw Businessplan Wordt Opgesteld…',
+    loading_sub:'Onze AI-agenten werken door elke sectie. Dit duurt 60–90 seconden.',
+    ps_intake:'Intake Agent — gegevens valideren', ps_grants:'Subsidie Agent — fondsen zoeken',
+    ps_market:'Markt Agent — markt analyseren', ps_writing:'Schrijver Agent — secties schrijven',
+    ps_financial:'Financiële Agent — prognoses', ps_compliance:'Compliance Agent — criteria controleren',
+    ps_assembly:'Definitief plan samenstellen',
+    tab_plan:'📄 Volledig Plan', tab_grants:'💰 Passende Subsidies',
+    btn_download:'⬇ Plan Downloaden (.txt)', btn_copy:'📋 Kopiëren', btn_reset:'🔄 Nieuw Plan',
+    copied:'✅ Gekopieerd!', score_label:'Compliance', plan_ready:'Plan Klaar',
+    err_required:'Vul alle verplichte velden in (gemarkeerd met *).',
+    err_connect:'Verbindingsfout met de API-server. Zorg dat deze actief is op',
+    footer_text:'Gebouwd voor Caribbean & CARICOM ondernemers · Aangedreven door GrantBridge AI',
+    pt_labels:{grant:'Subsidieaanvraag',bank:'Banklening',simple:'Eenvoudig Plan'},
+    generated_in:'Gegenereerd in', seconds:'s', revision:'herzieningscyclus', revisions:'herzieningscycli', completed:'voltooid',
+  },
+  es: {
+    eyebrow:'Para Emprendedores del Caribe',
+    hero_title:'IA Que Te Ayuda a', hero_title_em:'Descubrir Subvenciones y Fondos', hero_title_3:'en Minutos',
+    hero_sub:'GrantBridge AI crea planes de negocio listos para subvenciones para emprendedores del Caribe — adaptados a CDB, BID y fondos gubernamentales de CARICOM.',
+    stat1:'Países CARICOM', stat2:'Idiomas', stat3:'Tipos de Plan', stat4:'Generación de Plan',
+    plan_type_label:'Elige tu tipo de plan',
+    pt_grant_name:'Solicitud de Subvención', pt_grant_desc:'CDB, BID, fondos gubernamentales',
+    pt_bank_name:'Préstamo Bancario', pt_bank_desc:'Solicitud bancaria local',
+    pt_simple_name:'Plan Simple', pt_simple_desc:'Uso personal, ideas iniciales',
+    form_title:'Cuéntanos Sobre Tu Negocio', form_sub:'Completa los detalles — cuanto más compartas, mejor será tu plan',
+    lbl_biz_name:'Nombre del Negocio', ph_biz_name:'ej. AgroTech Caribe',
+    lbl_industry:'Industria',
+    ind_select:'— Seleccionar industria —', ind_agri:'Agritecnología / Agricultura', ind_fin:'Fintech / Finanzas',
+    ind_tour:'Turismo / Hospitalidad', ind_tech:'Tecnología / Software', ind_mfg:'Manufactura',
+    ind_retail:'Comercio / E-commerce', ind_health:'Salud / Bienestar', ind_edu:'Educación / Formación',
+    ind_env:'Medio Ambiente / Clima', ind_food:'Alimentos y Bebidas', ind_log:'Logística / Transporte',
+    ind_cre:'Industrias Creativas', ind_other:'Otro',
+    lbl_idea:'Idea de Negocio', ph_idea:'Describe tu idea. ¿Qué problema resuelve?',
+    lbl_location:'Ubicación', lbl_financial:'Expectativas Financieras',
+    ph_financial_grant:'ej. Buscando USD 50,000 en subvención',
+    ph_financial_bank:'ej. Necesito préstamo de USD 30,000',
+    ph_financial_simple:'ej. Empezando con USD 5,000',
+    lbl_customers:'Clientes Objetivo', ph_customers:'¿Quiénes son tus clientes?',
+    lbl_background:'Tu Experiencia', ph_background:'Tus habilidades relevantes.',
+    optional:'(opcional)', lbl_loan:'Monto del Préstamo', ph_loan:'ej. USD 30,000 en 5 años',
+    lbl_output_lang:'Idioma del Plan',
+    btn_generate:'Generar Mi Plan de Negocio',
+    loading_title:'Construyendo Tu Plan…',
+    loading_sub:'Nuestros agentes de IA trabajan en cada sección. Toma 60–90 segundos.',
+    ps_intake:'Agente de Ingreso — validando datos', ps_grants:'Agente de Investigación — buscando fondos',
+    ps_market:'Agente de Mercado — analizando mercado', ps_writing:'Agente Escritor — redactando secciones',
+    ps_financial:'Agente Financiero — proyecciones', ps_compliance:'Agente de Cumplimiento — criterios',
+    ps_assembly:'Ensamblando plan final',
+    tab_plan:'📄 Plan Completo', tab_grants:'💰 Subvenciones',
+    btn_download:'⬇ Descargar Plan (.txt)', btn_copy:'📋 Copiar', btn_reset:'🔄 Nuevo Plan',
+    copied:'✅ ¡Copiado!', score_label:'Cumplimiento', plan_ready:'Plan Listo',
+    err_required:'Por favor completa todos los campos obligatorios (*).',
+    err_connect:'Error al conectar con el servidor API en',
+    footer_text:'Creado para emprendedores del Caribe y CARICOM · Impulsado por GrantBridge AI',
+    pt_labels:{grant:'Solicitud de Subvención',bank:'Préstamo Bancario',simple:'Plan Simple'},
+    generated_in:'Generado en', seconds:'s', revision:'ciclo de revisión', revisions:'ciclos de revisión', completed:'completados',
+  },
+  pt: {
+    eyebrow:'Para Empreendedores do Caribe',
+    hero_title:'IA Que Ajuda Você a', hero_title_em:'Descobrir Subsídios e Financiamento', hero_title_3:'em Minutos',
+    hero_sub:'GrantBridge AI cria planos de negócio prontos para subsídios para empreendedores caribenhos — adaptados ao CDB, BID e fundos governamentais do CARICOM.',
+    stat1:'Países CARICOM', stat2:'Idiomas', stat3:'Tipos de Plano', stat4:'Geração de Plano',
+    plan_type_label:'Escolha o tipo de plano',
+    pt_grant_name:'Solicitação de Subsídio', pt_grant_desc:'CDB, BID, fundos governamentais',
+    pt_bank_name:'Empréstimo Bancário', pt_bank_desc:'Solicitação bancária local',
+    pt_simple_name:'Plano Simples', pt_simple_desc:'Uso pessoal, ideias iniciais',
+    form_title:'Conte-nos Sobre Seu Negócio', form_sub:'Preencha os detalhes — quanto mais você compartilhar, melhor',
+    lbl_biz_name:'Nome do Negócio', ph_biz_name:'ex. AgroTech Caribe',
+    lbl_industry:'Indústria',
+    ind_select:'— Selecionar indústria —', ind_agri:'Agritech / Agricultura', ind_fin:'Fintech / Finanças',
+    ind_tour:'Turismo / Hotelaria', ind_tech:'Tecnologia / Software', ind_mfg:'Manufatura',
+    ind_retail:'Varejo / E-commerce', ind_health:'Saúde / Bem-estar', ind_edu:'Educação / Treinamento',
+    ind_env:'Meio Ambiente / Clima', ind_food:'Alimentos e Bebidas', ind_log:'Logística / Transporte',
+    ind_cre:'Indústrias Criativas', ind_other:'Outro',
+    lbl_idea:'Ideia de Negócio', ph_idea:'Descreva sua ideia. Que problema resolve?',
+    lbl_location:'Localização', lbl_financial:'Expectativas Financeiras',
+    ph_financial_grant:'ex. Buscando USD 50.000 em subsídio',
+    ph_financial_bank:'ex. Preciso de USD 30.000 em empréstimo',
+    ph_financial_simple:'ex. Começando com SRD 20.000',
+    lbl_customers:'Clientes-Alvo', ph_customers:'Quem são seus clientes?',
+    lbl_background:'Sua Experiência', ph_background:'Suas habilidades relevantes.',
+    optional:'(opcional)', lbl_loan:'Valor do Empréstimo', ph_loan:'ex. USD 30.000 em 5 anos',
+    lbl_output_lang:'Idioma do Plano',
+    btn_generate:'Gerar Meu Plano de Negócio',
+    loading_title:'Construindo Seu Plano…',
+    loading_sub:'Nossos agentes de IA trabalham em cada seção. Leva 60–90 segundos.',
+    ps_intake:'Agente de Entrada — validando dados', ps_grants:'Agente de Pesquisa — encontrando fundos',
+    ps_market:'Agente de Mercado — analisando mercado', ps_writing:'Agente Escritor — redigindo seções',
+    ps_financial:'Agente Financeiro — projeções', ps_compliance:'Agente de Conformidade — critérios',
+    ps_assembly:'Montando plano final',
+    tab_plan:'📄 Plano Completo', tab_grants:'💰 Subsídios',
+    btn_download:'⬇ Baixar Plano (.txt)', btn_copy:'📋 Copiar', btn_reset:'🔄 Novo Plano',
+    copied:'✅ Copiado!', score_label:'Conformidade', plan_ready:'Plano Pronto',
+    err_required:'Por favor preencha todos os campos obrigatórios (*).',
+    err_connect:'Erro ao conectar com o servidor API em',
+    footer_text:'Criado para empreendedores do Caribe e CARICOM · Desenvolvido com GrantBridge AI',
+    pt_labels:{grant:'Solicitação de Subsídio',bank:'Empréstimo Bancário',simple:'Plano Simples'},
+    generated_in:'Gerado em', seconds:'s', revision:'ciclo de revisão', revisions:'ciclos de revisão', completed:'concluídos',
+  },
+  fr: {
+    eyebrow:'Pour les Entrepreneurs des Caraïbes',
+    hero_title:"L'IA Qui Vous Aide à", hero_title_em:'Découvrir Subventions et Financements', hero_title_3:'en Minutes',
+    hero_sub:"GrantBridge AI crée des plans d'affaires prêts pour subventions pour les entrepreneurs caribéens — adaptés à la CDB, BID et fonds gouvernementaux CARICOM.",
+    stat1:'Pays CARICOM', stat2:'Langues', stat3:'Types de Plan', stat4:'Génération de Plan',
+    plan_type_label:'Choisissez votre type de plan',
+    pt_grant_name:'Demande de Subvention', pt_grant_desc:'CDB, BID, fonds gouvernementaux',
+    pt_bank_name:'Prêt Bancaire', pt_bank_desc:'Demande bancaire locale',
+    pt_simple_name:'Plan Simple', pt_simple_desc:'Usage personnel, idées en démarrage',
+    form_title:'Parlez-nous de Votre Entreprise', form_sub:'Remplissez les détails — plus vous partagez, meilleur sera votre plan',
+    lbl_biz_name:"Nom de l'Entreprise", ph_biz_name:'ex. AgroTech Caraïbes',
+    lbl_industry:'Secteur',
+    ind_select:'— Sélectionner un secteur —', ind_agri:'Agritech / Agriculture', ind_fin:'Fintech / Finance',
+    ind_tour:'Tourisme / Hôtellerie', ind_tech:'Technologie / Logiciel', ind_mfg:'Fabrication',
+    ind_retail:'Commerce / E-commerce', ind_health:'Santé / Bien-être', ind_edu:'Éducation / Formation',
+    ind_env:'Environnement / Climat', ind_food:'Alimentation et Boissons', ind_log:'Logistique / Transport',
+    ind_cre:'Industries Créatives', ind_other:'Autre',
+    lbl_idea:"Idée d'Entreprise", ph_idea:"Décrivez votre idée. Quel problème résout-elle?",
+    lbl_location:'Localisation', lbl_financial:'Attentes Financières',
+    ph_financial_grant:'ex. Recherche USD 50 000 en subvention',
+    ph_financial_bank:"ex. Besoin d'un prêt de USD 30 000",
+    ph_financial_simple:"ex. Démarrage avec SRD 20 000",
+    lbl_customers:'Clients Cibles', ph_customers:'Qui sont vos clients?',
+    lbl_background:'Votre Parcours', ph_background:'Vos compétences pertinentes.',
+    optional:'(optionnel)', lbl_loan:'Montant du Prêt', ph_loan:'ex. USD 30 000 sur 5 ans',
+    lbl_output_lang:'Langue du Plan',
+    btn_generate:"Générer Mon Plan d'Affaires",
+    loading_title:'Construction de Votre Plan…',
+    loading_sub:'Nos agents IA travaillent sur chaque section. Cela prend 60–90 secondes.',
+    ps_intake:'Agent Accueil — validation', ps_grants:'Agent Recherche — financements',
+    ps_market:'Agent Marché — analyse', ps_writing:'Agent Rédacteur — rédaction',
+    ps_financial:'Agent Financier — projections', ps_compliance:'Agent Conformité — critères',
+    ps_assembly:'Assemblage du plan final',
+    tab_plan:'📄 Plan Complet', tab_grants:'💰 Subventions',
+    btn_download:'⬇ Télécharger le Plan (.txt)', btn_copy:'📋 Copier', btn_reset:'🔄 Nouveau Plan',
+    copied:'✅ Copié!', score_label:'Conformité', plan_ready:'Plan Prêt',
+    err_required:'Veuillez remplir tous les champs obligatoires (*).',
+    err_connect:"Erreur de connexion au serveur API sur",
+    footer_text:'Créé pour les entrepreneurs des Caraïbes et de la CARICOM · Propulsé par GrantBridge AI',
+    pt_labels:{grant:'Demande de Subvention',bank:'Prêt Bancaire',simple:'Plan Simple'},
+    generated_in:'Généré en', seconds:'s', revision:'cycle de révision', revisions:'cycles de révision', completed:'complétés',
+  },
+};
+
+const LANG_TO_API = { en:'English', nl:'Dutch', es:'Spanish', pt:'Portuguese', fr:'French' };
+
+function applyTranslations(lang) {
+  const t = T[lang] || T.en;
+  currentLang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+  document.getElementById('html-root').lang = lang;
+  const planType = document.querySelector('input[name=plan_type]:checked')?.value || 'grant';
+  updateFinancialPlaceholder(planType, t);
+  const outputLangMap = { en:'English', nl:'Dutch', es:'Spanish', pt:'Portuguese', fr:'French' };
+  document.getElementById('outputLang').value = outputLangMap[lang] || 'English';
+}
+
+function updateFinancialPlaceholder(planType, t) {
+  const ph = t[`ph_financial_${planType}`] || t.ph_financial_grant || '';
+  if (ph) document.getElementById('financial_expectations').placeholder = ph;
+}
+
+function switchLanguage(lang) { applyTranslations(lang); }
+
+function selectPlanType(type, el) {
+  document.querySelectorAll('.plan-type-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('bank-extra').style.display = type === 'bank' ? 'flex' : 'none';
+  updateFinancialPlaceholder(type, T[currentLang] || T.en);
+}
+
+const stepOrder = ['intake','grants','market','writing','financial','compliance','assembly'];
+let stepIndex = 0, stepTimer = null;
+
+function startStepAnimation() {
+  stepIndex = 0;
+  stepOrder.forEach(s => { document.getElementById('step-'+s).className = 'pipeline-step'; });
+  advanceStep();
+}
+function advanceStep() {
+  if (stepIndex >= stepOrder.length) return;
+  if (stepIndex > 0) document.getElementById('step-'+stepOrder[stepIndex-1]).className = 'pipeline-step done';
+  document.getElementById('step-'+stepOrder[stepIndex]).className = 'pipeline-step active';
+  stepIndex++;
+  const delays = [4000,8000,12000,18000,10000,8000,4000];
+  stepTimer = setTimeout(advanceStep, delays[stepIndex-1] || 8000);
+}
+function stopStepAnimation() {
+  clearTimeout(stepTimer);
+  stepOrder.forEach(s => { document.getElementById('step-'+s).className = 'pipeline-step done'; });
+}
+
+let currentThreadId = null;
+
+async function generatePlan() {
+  const t = T[currentLang] || T.en;
+  const required = ['business_name','startup_idea','industry','location','target_customers','financial_expectations'];
+  for (const id of required) {
+    if (!document.getElementById(id).value.trim()) {
+      showError(t.err_required);
+      document.getElementById(id).focus();
+      return;
+    }
+  }
+  hideError();
+  businessName = document.getElementById('business_name').value.trim();
+  const planType = document.querySelector('input[name=plan_type]:checked')?.value || 'grant';
+  const outputLang = document.getElementById('outputLang').value;
+  document.getElementById('generateBtn').disabled = true;
+  document.getElementById('btnText').textContent = '…';
+  document.getElementById('loadingCard').classList.add('visible');
+  document.getElementById('resultCard').classList.remove('visible');
+  document.getElementById('reviewPanel1').classList.remove('visible');
+  document.getElementById('reviewPanel2').classList.remove('visible');
+  startStepAnimation();
+  const payload = {
+    business_name: document.getElementById('business_name').value.trim(),
+    startup_idea: document.getElementById('startup_idea').value.trim(),
+    industry: document.getElementById('industry').value,
+    location: document.getElementById('location').value.trim(),
+    target_customers: document.getElementById('target_customers').value.trim(),
+    financial_expectations: document.getElementById('financial_expectations').value.trim(),
+    founder_background: document.getElementById('founder_background').value.trim(),
+    plan_type: planType,
+    language: outputLang,
+  };
+  try {
+    const res = await fetch(`${API_BASE}/generate/start`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) { const err = await res.json(); throw new Error(err.detail || `Server error ${res.status}`); }
+    const data = await res.json();
+    stopStepAnimation();
+    document.getElementById('loadingCard').classList.remove('visible');
+    if (data.status === 'checkpoint') {
+      currentThreadId = data.thread_id;
+      showCheckpoint(data);
+    } else {
+      showResult(data, planType, outputLang);
+    }
+  } catch (err) {
+    stopStepAnimation();
+    document.getElementById('loadingCard').classList.remove('visible');
+    // Fallback to original /generate endpoint if /generate/start not available
+    try {
+      const res2 = await fetch(`${API_BASE}/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res2.ok) { const e2 = await res2.json(); throw new Error(e2.detail || `Server error ${res2.status}`); }
+      const data2 = await res2.json();
+      showResult(data2, planType, outputLang);
+    } catch (err2) {
+      showError(`${t.err_connect} ${API_BASE}. (${err2.message})`);
+    }
+  } finally {
+    document.getElementById('generateBtn').disabled = false;
+    document.getElementById('btnText').innerHTML = (T[currentLang]||T.en).btn_generate;
+  }
+}
+
+function showCheckpoint(data) {
+  // Hide loading card first
+  document.getElementById('loadingCard').classList.remove('visible');
+  // Hide both panels first
+  document.getElementById('reviewPanel1').classList.remove('visible');
+  document.getElementById('reviewPanel2').classList.remove('visible');
+  const panel = data.checkpoint === 1 ? 'reviewPanel1' : 'reviewPanel2';
+  const review = data.review_data || {};
+  if (data.checkpoint === 1) {
+    document.getElementById('r1_market_size').value    = review.market_size || '';
+    document.getElementById('r1_competitors').value    = review.competitor_overview || '';
+    document.getElementById('r1_customers').value      = review.target_customer_analysis || '';
+    const grantsEl = document.getElementById('r1_grants');
+    grantsEl.innerHTML = '';
+    const grants = review.best_matching_grants || [];
+    if (grants.length) {
+      grants.forEach(g => {
+        const name = g.name || g.grant_name || 'Grant';
+        grantsEl.innerHTML += `<span class="review-grant-tag">${name}</span>`;
+      });
+    } else {
+      grantsEl.innerHTML = '<span style="color:var(--color-text-hint);font-size:12px">No specific grants matched yet — will search further after review.</span>';
+    }
+  } else {
+    ['executive_summary','problem_statement','solution','market_opportunity',
+     'business_model','marketing_strategy','operations_plan','funding_request'].forEach(f => {
+      const el = document.getElementById('r2_' + f);
+      if (el) el.value = review[f] || '';
+    });
+  }
+  document.getElementById(panel).classList.add('visible');
+  document.getElementById(panel).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function approveCheckpoint(checkpointNum, edits) {
+  const t = T[currentLang] || T.en;
+  const planType = document.querySelector('input[name=plan_type]:checked')?.value || 'grant';
+  const outputLang = document.getElementById('outputLang').value;
+  const btn = document.getElementById(checkpointNum === 1 ? 'reviewPanel1' : 'reviewPanel2').querySelector('.btn-review-approve');
+  btn.disabled = true;
+  btn.textContent = 'Processing…';
+  document.getElementById('loadingCard').classList.add('visible');
+  document.getElementById('reviewPanel1').classList.remove('visible');
+  document.getElementById('reviewPanel2').classList.remove('visible');
+  startStepAnimation();
+  try {
+    const res = await fetch(`${API_BASE}/generate/resume`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ thread_id: currentThreadId, checkpoint: checkpointNum, approved: true, edits }),
+    });
+    if (!res.ok) { const err = await res.json(); throw new Error(err.detail || `Server error ${res.status}`); }
+    const data = await res.json();
+    stopStepAnimation();
+    document.getElementById('loadingCard').classList.remove('visible');
+    if (data.status === 'checkpoint') {
+      showCheckpoint(data);
+    } else {
+      showResult(data, planType, outputLang);
+    }
+  } catch (err) {
+    stopStepAnimation();
+    document.getElementById('loadingCard').classList.remove('visible');
+    showError('Resume error: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = checkpointNum === 1 ? 'Approve & Continue to Plan Writing' : 'Approve & Generate Final Plan';
+  }
+}
+
+function approveCheckpoint1() {
+  const edits = {
+    market_size:              document.getElementById('r1_market_size').value.trim(),
+    competitor_overview:      document.getElementById('r1_competitors').value.trim(),
+    target_customer_analysis: document.getElementById('r1_customers').value.trim(),
+  };
+  approveCheckpoint(1, edits);
+}
+
+function approveCheckpoint2() {
+  const edits = {};
+  ['executive_summary','problem_statement','solution','market_opportunity',
+   'business_model','marketing_strategy','operations_plan','funding_request'].forEach(f => {
+    const el = document.getElementById('r2_' + f);
+    if (el && el.value.trim()) edits[f] = el.value.trim();
+  });
+  approveCheckpoint(2, edits);
+}
+
+function showResult(data, planType, outputLang) {
+  document.getElementById('loadingCard').classList.remove('visible');
+  const t = T[currentLang] || T.en;
+  generatedPlan = data.final_plan || '';
+  const score = Math.round((data.compliance_score || 0) * 100);
+  const revs  = data.revision_count || 0;
+  const time  = data.processing_time_seconds || 0;
+  const ptLabel = t.pt_labels[planType] || planType;
+  const revWord = revs === 1 ? t.revision : t.revisions;
+  document.getElementById('resultTitle').textContent = `${data.business_name || businessName} — ${t.plan_ready}`;
+  document.getElementById('resultMeta').textContent  = `${ptLabel} · ${outputLang} · ${t.generated_in} ${time}${t.seconds} · ${revs} ${revWord} ${t.completed}`;
+  document.getElementById('scoreText').textContent   = `${t.score_label}: ${score}%`;
+  document.getElementById('planOutput').textContent  = generatedPlan;
+  const grantsGrid = document.getElementById('grantsGrid');
+  grantsGrid.innerHTML = '';
+  const grants = data.grants_matched || [];
+  if (!grants.length) {
+    grantsGrid.innerHTML = `<p style="color:rgba(255,255,255,0.35);font-size:14px">No grants matched for this profile.</p>`;
+  } else {
+    grants.forEach(g => {
+      const pct = Math.round((g.match_score||0)*100);
+      const criteria = (g.eligibility_criteria||[]).slice(0,3);
+      grantsGrid.innerHTML += `
+        <div class="grant-card">
+          <div class="grant-card-top">
+            <div><div class="grant-name">${g.name||'Grant'}</div><div class="grant-provider">${g.provider||''}</div></div>
+            <div class="grant-amount">${g.formatted_amount || ('USD ' + (g.max_amount_usd||0).toLocaleString())}</div>
+          </div>
+          <div class="grant-match">
+            <div class="match-bar-bg"><div class="match-bar-fill" style="width:${pct}%"></div></div>
+            <div class="match-pct">${pct}% match</div>
+          </div>
+          <div class="grant-criteria">${criteria.map(c=>`<span class="criteria-tag">${c}</span>`).join('')}</div>
+        </div>`;
+    });
+  }
+  document.getElementById('resultCard').classList.add('visible');
+  document.getElementById('resultCard').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+function downloadPlan() {
+  const blob = new Blob([generatedPlan], { type:'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${businessName.replace(/\s+/g,'_')}_Business_Plan.txt`;
+  a.click();
+}
+function copyPlan() {
+  const t = T[currentLang] || T.en;
+  navigator.clipboard.writeText(generatedPlan).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = t.copied;
+    setTimeout(() => btn.innerHTML = t.btn_copy, 2000);
+  });
+}
+function resetForm() {
+  document.getElementById('resultCard').classList.remove('visible');
+  document.getElementById('formCard').scrollIntoView({ behavior:'smooth' });
+  generatedPlan = '';
+}
+function showError(msg) {
+  const box = document.getElementById('errorBox');
+  box.textContent = msg;
+  box.classList.add('visible');
+  box.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+function hideError() { document.getElementById('errorBox').classList.remove('visible'); }
+
+applyTranslations('en');
+document.addEventListener('keydown', e => { if (e.key==='Enter' && e.ctrlKey) generatePlan(); });
+
+const MOON_SVG = `<svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>`;
+const SUN_SVG  = `<svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('themeToggle').innerHTML = isLight ? SUN_SVG : MOON_SVG;
+  localStorage.setItem('gb_theme', isLight ? 'light' : 'dark');
+}
+(function initTheme() {
+  const saved = localStorage.getItem('gb_theme');
+  if (saved === 'light') {
+    document.documentElement.classList.add('light');
+    const btn = document.getElementById('themeToggle');
+    if (btn) btn.innerHTML = SUN_SVG;
+  }
+})();
+</script>
+</body>
+</html>
