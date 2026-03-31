@@ -1,2 +1,5 @@
 .env
 .env
+venv/
+*.log
+currency_patch.py
