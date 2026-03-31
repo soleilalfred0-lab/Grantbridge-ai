@@ -3,3 +3,4 @@
 venv/
 *.log
 currency_patch.py
+data/chroma_db/
