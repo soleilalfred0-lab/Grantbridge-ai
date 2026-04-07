@@ -1,6 +1,29 @@
+# Environment
 .env
-.env
+
+# Virtual environment
 venv/
+
+# Log files (all formats)
 *.log
+*.log.*
+nohup.out
+out.log
+err.log
+err.log.1
+
+# One-time patch scripts
+hitl_patch.py
 currency_patch.py
+
+# Vector DB
 data/chroma_db/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+.DS_Store
+Thumbs.db
