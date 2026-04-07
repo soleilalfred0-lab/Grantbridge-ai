@@ -27,3 +27,12 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Backup files
+*.backup
+*.backup*
